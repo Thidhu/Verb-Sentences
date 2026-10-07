@@ -1,0 +1,623 @@
+<html style="margin:0;padding:0;">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+Tibetan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+var c=document.createElement('style');
+c.textContent=
+':root{--bg:#faf9f4;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#297a2e;--accent-soft:rgba(41,122,46,.14);--accent2:#d97706;--accent2-soft:rgba(217,119,6,.14);--border:rgba(15,23,42,.08)}'
++'.btn{padding:10px 20px;border-radius:12px;font-weight:600;font-family:inherit;font-size:14px;cursor:pointer;transition:transform .12s,box-shadow .12s,background .12s,color .12s;border:1px solid transparent;touch-action:manipulation}'
++'.btn:active{transform:scale(.96)}.btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}'
++'.btn-primary{background:var(--accent-soft);color:var(--text);border-color:var(--accent)}.btn-primary:hover{box-shadow:0 4px 14px var(--accent-soft)}'
++'.btn-secondary{background:var(--card);color:var(--muted);border-color:var(--border)}.btn-secondary:hover{color:var(--text);border-color:var(--accent)}'
++'.cls-btn{padding:6px 13px;border-radius:20px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;font-family:inherit}'
++'.cls-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}'
++'.snd-btn{padding:5px 12px;border-radius:20px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:inherit}'
++'.snd-btn.off{color:var(--muted);opacity:.7}'
++'.word-tile{background:#fff;border:2px solid var(--accent);color:var(--text);border-radius:12px;padding:9px 15px;font-weight:600;font-size:17px;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s;touch-action:none;line-height:1.4;font-family:inherit}'
++'.word-tile:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}.word-tile.dragging{opacity:.35}'
++'.drag-clone{position:fixed;z-index:9999;pointer-events:none;opacity:.92;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;transform:rotate(-2deg) scale(1.05);margin:0}'
++'.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:60px;align-items:center;padding:13px;background:var(--card);border:1px dashed var(--border);border-radius:14px}'
++'.slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:56px;align-items:center;margin-bottom:12px}'
++'.slot{min-width:58px;min-height:50px;border:2px dashed #cbd5e1;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:4px 8px;background:rgba(148,163,184,.08);transition:border-color .15s,background .15s}'
++'.slot.hover{border-color:var(--accent);background:var(--accent-soft);transform:scale(1.06)}'
++'.slot.correct{border-color:#16a34a;background:rgba(22,163,74,.12)}.slot.wrong{border-color:#dc2626;background:rgba(220,38,38,.08)}'
++'.slot .word-tile{padding:5px 11px;font-size:16px;cursor:pointer;box-shadow:none}'
++'@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}.shake{animation:shake .4s ease}'
++'@keyframes popIn{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}.pop-in{animation:popIn .35s ease backwards}'
++'.star{color:#f59e0b;font-size:24px}.star.dim{color:#e2e8f0}'
++'.prop{opacity:0}.fx{opacity:0}'
++'#cloud1,#cloud2{animation:cloudDrift 38s linear infinite}#cloud2{animation-duration:52s;animation-delay:-20s}'
++'@keyframes cloudDrift{from{transform:translateX(-80px)}to{transform:translateX(680px)}}'
++'.grass{animation:grassSway 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:bottom center}'
++'@keyframes grassSway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}'
++'#sun{animation:sunPulse 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}'
++'@keyframes sunPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}'
++'#rbody{animation:breathe 3s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}'
++'@keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.045)}}'
++'#eye{animation:blink 4.2s infinite;transform-box:fill-box;transform-origin:center}'
++'@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}'
++'#ears{animation:earTwitch 5.5s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}'
++'@keyframes earTwitch{0%,88%,100%{transform:rotate(0)}90%{transform:rotate(-7deg)}93%{transform:rotate(5deg)}}'
++'#tail{animation:tailWag 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:100% 50%}'
++'@keyframes tailWag{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(10deg)}}'
++'.leg{transform-box:fill-box;transform-origin:50% 0%}'
++'.scene.moving .legA{animation:legA .5s ease-in-out infinite}.scene.moving .legB{animation:legB .5s ease-in-out infinite}'
++'.scene.runfast .legA{animation:legA .28s ease-in-out infinite}.scene.runfast .legB{animation:legB .28s ease-in-out infinite}'
++'@keyframes legA{0%,100%{transform:rotate(28deg)}50%{transform:rotate(-28deg)}}'
++'@keyframes legB{0%,100%{transform:rotate(-28deg)}50%{transform:rotate(28deg)}}'
++'.scene.moving #rbody{animation:bodyBob .5s ease-in-out infinite,breathe 3s ease-in-out infinite}'
++'.scene.runfast #rbody{animation:bodyBob .28s ease-in-out infinite,breathe 3s ease-in-out infinite}'
++'@keyframes bodyBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}'
++'.scene.moving #ears{animation:earFlop .5s ease-in-out infinite}'
++'@keyframes earFlop{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(6deg)}}'
++'@keyframes goProp{0%{transform:translate(120px,230px)}35%{transform:translate(330px,230px)}100%{transform:translate(330px,230px)}}'
++'@keyframes walkAcross{0%{transform:translate(120px,230px)}100%{transform:translate(470px,230px)}}'
++'@keyframes runAcross{0%{transform:translate(120px,230px)}100%{transform:translate(490px,225px)}}'
++'@keyframes jumpOver{0%{transform:translate(120px,230px)}30%{transform:translate(230px,230px)}50%{transform:translate(310px,150px)}70%{transform:translate(390px,230px)}100%{transform:translate(470px,230px)}}'
++'@keyframes climbHill{0%{transform:translate(120px,230px)}100%{transform:translate(430px,150px)}}'
++'@keyframes swimPond{0%{transform:translate(120px,230px)}25%{transform:translate(300px,230px)}100%{transform:translate(470px,218px)}}'
++'@keyframes flyBird{0%{transform:translate(-40px,80px)}100%{transform:translate(640px,60px)}}'
++'@keyframes fallTrip{0%{transform:translate(120px,230px) rotate(0)}40%{transform:translate(300px,230px) rotate(0)}55%{transform:translate(340px,242px) rotate(-70deg)}100%{transform:translate(340px,242px) rotate(-70deg)}}'
++'@keyframes sitDown{0%{transform:translate(120px,230px)}30%{transform:translate(300px,230px)}100%{transform:translate(300px,238px)}}'
++'@keyframes standUp{0%{transform:translate(120px,230px)}35%{transform:translate(300px,230px)}100%{transform:translate(300px,210px)}}'
++'@keyframes danceHop{0%,100%{transform:translate(300px,230px) rotate(0)}25%{transform:translate(300px,175px) rotate(-8deg)}50%{transform:translate(300px,230px) rotate(0)}75%{transform:translate(300px,175px) rotate(8deg)}}'
++'@keyframes danceStart{0%{transform:translate(120px,230px)}30%{transform:translate(300px,230px)}100%{transform:translate(300px,230px)}}'
++'@keyframes chomp{0%,100%{transform:rotate(0)}50%{transform:rotate(-10deg)}}'
++'@keyframes lapHead{0%,100%{transform:rotate(0) translateY(0)}50%{transform:rotate(14deg) translateY(4px)}}'
++'@keyframes carrotShrink{0%{opacity:0;transform:scale(1)}12%{opacity:1}80%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.15)}}'
++'@keyframes fadeIn{to{opacity:1}}'
++'@keyframes zzzFloat{0%{opacity:0;transform:translate(0,0)}20%{opacity:1}100%{opacity:0;transform:translate(14px,-46px)}}'
++'@keyframes pawWave{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(35deg)}}'
++'@keyframes notesFloat{0%{opacity:0;transform:translateY(14px)}20%{opacity:1}100%{opacity:0;transform:translateY(-48px)}}'
++'@keyframes canTilt{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}'
++'@keyframes flowerGrow{0%{transform:scaleY(.1);opacity:0}30%{opacity:1}100%{transform:scaleY(1);opacity:1}}'
++'@keyframes dustPuff{0%{opacity:0;transform:translate(0,0) scale(.6)}20%{opacity:.7}100%{opacity:0;transform:translate(-26px,-14px) scale(1.6)}}'
++'@keyframes sparklePop{0%{opacity:0;transform:scale(.3) rotate(0)}30%{opacity:1}100%{opacity:0;transform:scale(1.4) rotate(120deg)}}'
++'@keyframes rainFall{0%{opacity:0;transform:translateY(-20px)}15%{opacity:.85}100%{opacity:0;transform:translateY(90px)}}'
++'@keyframes tearDrop{0%{opacity:0;transform:translateY(0)}15%{opacity:1}100%{opacity:0;transform:translateY(34px)}}'
++'@keyframes bubbleUp{0%{opacity:0;transform:translateY(6px) scale(.6)}20%{opacity:.9}100%{opacity:0;transform:translateY(-46px) scale(1.3)}}'
++'@keyframes steamRise{0%{opacity:0;transform:translateY(4px)}20%{opacity:.7}100%{opacity:0;transform:translateY(-40px) translateX(8px)}}'
++'@keyframes waterDrop{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(26px)}}'
++'@keyframes ballBounce{0%{transform:translate(0,0)}25%{transform:translate(-40px,-60px)}50%{transform:translate(-80px,0)}75%{transform:translate(-110px,-40px)}100%{transform:translate(-130px,0)}}'
++'@keyframes lidOpen{0%{transform:rotate(0)}100%{transform:rotate(-105deg)}}'
++'@keyframes birdFlap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.5)}}'
++'@keyframes bubbleTalk{0%,100%{transform:scale(1);opacity:0}15%{opacity:1;transform:scale(1.05)}85%{opacity:1;transform:scale(1)}}'
++'@keyframes headTilt{0%,100%{transform:rotate(0)}50%{transform:rotate(12deg)}}'
++'@keyframes armWrite{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(18deg)}}'
++'@keyframes umbrellaOpen{0%{transform:scaleY(0)}60%{transform:scaleY(1.1)}100%{transform:scaleY(1)}}'
++'.scene.action-walk #rabbit{animation:walkAcross 3s ease forwards}'
++'.scene.action-run #rabbit{animation:runAcross 2s ease-in forwards}'
++'.scene.action-jump #rabbit{animation:jumpOver 2.2s ease-in-out forwards}'
++'.scene.action-climb #rabbit{animation:climbHill 3s ease forwards}'
++'.scene.action-swim #rabbit{animation:swimPond 3s ease forwards}'
++'.scene.action-fall #rabbit{animation:fallTrip 2.6s ease forwards}'
++'.scene.action-sit #rabbit{animation:sitDown 2.6s ease forwards}'
++'.scene.action-stand #rabbit{animation:standUp 2.6s ease forwards}'
++'.scene.action-wake #rabbit{animation:standUp 2.6s ease forwards}'
++'.scene.action-dance #rabbit{animation:danceStart 1s ease forwards, danceHop 1.4s ease 1s 2}'
++'.scene.action-eat #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-drink #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-cook #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-sleep #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-water #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-wave #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-give #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-catch #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-push #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-wash #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-open #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-bloom #rabbit{animation:goProp 3s ease forwards}'
++'.scene.action-rain #rabbit{animation:goProp 1.2s ease forwards}'
++'.scene.action-read #head{animation:headTilt 2s ease .4s forwards}'
++'.scene.action-write #arm{animation:armWrite .4s ease .8s 6}'
++'.scene.action-draw #arm{animation:armWrite .4s ease .8s 6}'
++'.scene.action-work #arm{animation:armWrite .35s ease .8s 8}'
++'.scene.action-teach #arm{animation:pawWave .5s ease .6s 5}'
++'.scene.action-sing #head{animation:headTilt 1.2s ease .3s 3}'
++'.scene.action-listen #ears{animation:earFlop .8s ease .3s 4}'
++'.scene.action-look #head{animation:headTilt 1.6s ease .3s 2}'
++'.scene.action-speak #head{animation:headTilt .6s ease .3s 5}'
++'.scene.action-think #head{animation:headTilt 2.4s ease .3s forwards}'
++'.scene.action-cry #head{animation:headTilt 2s ease .3s forwards}'
++'.scene.action-eat #head{animation:chomp .35s ease 1.6s 6}'
++'.scene.action-drink #head{animation:lapHead .4s ease 1.4s 6}'
++'.scene.action-wave #arm{animation:pawWave .4s ease 1.2s 7}'
++'.scene.action-give #arm{animation:pawWave .5s ease 1.2s 5}'
++'.scene.action-catch #arm{animation:pawWave .3s ease 1s 8}'
++'.scene.action-push #arm{animation:pawWave .35s ease 1s 8}'
++'.scene.action-wash #arm{animation:armWrite .3s ease 1s 10}'
++'.scene.action-open #arm{animation:armWrite .4s ease 1s 4}'
++'.scene.action-eat #carrot{animation:carrotShrink 3s ease forwards}'
++'.scene.action-drink #bowl{animation:fadeIn .4s .3s forwards}'
++'.scene.action-cook #pot{animation:fadeIn .4s .3s forwards}'
++'.scene.action-sleep #bed{animation:fadeIn .4s .3s forwards}'
++'.scene.action-sleep #zzz{animation:zzzFloat 1.6s ease 1.6s 2}'
++'.scene.action-jump #box{animation:fadeIn .3s forwards}'
++'.scene.action-read #book{animation:fadeIn .4s .2s forwards}'
++'.scene.action-write #paper{animation:fadeIn .4s .2s forwards}'
++'.scene.action-draw #paper{animation:fadeIn .4s .2s forwards}'
++'.scene.action-work #hammer{animation:fadeIn .4s .2s forwards}'
++'.scene.action-teach #board{animation:fadeIn .4s .2s forwards}'
++'.scene.action-water #wateringcan{animation:fadeIn .4s .3s forwards,canTilt 1.1s ease 1.1s 2}'
++'.scene.action-water #flower{animation:flowerGrow 1.6s ease 1.4s forwards}'
++'.scene.action-bloom #flower{animation:flowerGrow 2s ease .6s forwards}'
++'.scene.action-wave #fox{animation:fadeIn .4s .3s forwards}'
++'.scene.action-give #fox{animation:fadeIn .4s .3s forwards}'
++'.scene.action-give #gift{animation:fadeIn .4s .6s forwards}'
++'.scene.action-catch #ball{animation:fadeIn .3s .2s forwards,ballBounce 1.6s ease .5s forwards}'
++'.scene.action-push #cart{animation:fadeIn .3s .2s forwards}'
++'.scene.action-wash #tub{animation:fadeIn .3s .2s forwards}'
++'.scene.action-open #giftbox{animation:fadeIn .3s .2s forwards}'
++'.scene.action-open #lid{animation:lidOpen 1s ease 1.2s forwards;transform-box:fill-box;transform-origin:0% 100%}'
++'.scene.action-climb #hill{animation:fadeIn .3s forwards}'
++'.scene.action-swim #pond{animation:fadeIn .3s forwards}'
++'.scene.action-fly #bird{animation:flyBird 2.6s linear forwards}'
++'.scene.action-fly #birdwing{animation:birdFlap .3s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 0%}'
++'.scene.action-sing #notes{animation:notesFloat 2.6s ease .3s forwards}'
++'.scene.action-speak #bubble{animation:bubbleTalk 2.6s ease .3s forwards}'
++'.scene.action-think #thought{animation:bubbleTalk 2.6s ease .3s forwards}'
++'.scene.action-cry #tears{animation:fadeIn .3s .6s forwards}'
++'.scene.action-rain #umbrella{animation:fadeIn .3s .2s forwards,umbrellaOpen .6s ease .3s backwards;transform-box:fill-box;transform-origin:50% 100%}'
++'.scene.action-run #dust .d1{animation:dustPuff .6s ease .2s infinite}.scene.action-run #dust .d2{animation:dustPuff .6s ease .5s infinite}.scene.action-run #dust .d3{animation:dustPuff .6s ease .8s infinite}'
++'.scene.action-dance #sparkles .s1{animation:sparklePop .8s ease 1s infinite}.scene.action-dance #sparkles .s2{animation:sparklePop .8s ease 1.3s infinite}.scene.action-dance #sparkles .s3{animation:sparklePop .8s ease 1.6s infinite}.scene.action-dance #sparkles .s4{animation:sparklePop .8s ease 1.9s infinite}'
++'.scene.action-rain #raindrops .r{animation:rainFall .7s linear infinite}'
++'.scene.action-cry #tears .t1{animation:tearDrop 1s ease .8s infinite}.scene.action-cry #tears .t2{animation:tearDrop 1s ease 1.3s infinite}'
++'.scene.action-wash #bubbles .b1{animation:bubbleUp 1.4s ease 1s infinite}.scene.action-wash #bubbles .b2{animation:bubbleUp 1.4s ease 1.5s infinite}.scene.action-wash #bubbles .b3{animation:bubbleUp 1.4s ease 2s infinite}'
++'.scene.action-cook #steam .st1{animation:steamRise 1.6s ease .8s infinite}.scene.action-cook #steam .st2{animation:steamRise 1.6s ease 1.3s infinite}.scene.action-cook #steam .st3{animation:steamRise 1.6s ease 1.8s infinite}'
++'.scene.action-water #drops .wd{animation:waterDrop .8s ease 1.3s 3}'
++'.scene.action-drink #drops .wd{animation:waterDrop .8s ease 1.4s 4}'
+;
+document.head.appendChild(c);
+})();
+</script>
+<div style="background-color:transparent;box-sizing:border-box;">
+<div style="font-family:'Fredoka','Noto Sans Tibetan',sans-serif;background:radial-gradient(900px 480px at 50% -10%,var(--accent-soft),transparent 65%),var(--bg);color:var(--text);">
+<div style="max-width:640px;margin:0 auto;padding:24px 16px 40px;text-align:center;">
+
+<h1 style="font-size:30px;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin:0;">Rabbit <span style="color:var(--accent);">Sentence</span> Builder</h1>
+<p style="color:var(--muted);font-size:13.5px;margin:7px 0 0;line-height:1.6;">All 213 verbs from the Primary English–Dzongkha bank. Pick a class, build the sentence, watch the rabbit act it out.</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:14px 0 6px;" id="classBar">
+<button class="cls-btn active" data-cls="PP">PP · 28</button>
+<button class="cls-btn" data-cls="I">I · 30</button>
+<button class="cls-btn" data-cls="II">II · 30</button>
+<button class="cls-btn" data-cls="III">III · 30</button>
+<button class="cls-btn" data-cls="IV">IV · 40</button>
+<button class="cls-btn" data-cls="V">V · 40</button>
+<button class="cls-btn" data-cls="VI">VI · 15</button>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:10px 0 12px;">
+<span id="levelLabel" style="font-size:13px;font-weight:600;color:var(--muted);">Sentence 1 of 28 · go</span>
+<span style="font-size:13px;color:var(--muted);">Stars: <span id="starTotal" style="font-weight:700;color:#f59e0b;">0</span></span>
+<!-- AUDIO CONTROLS: music on/off and sound effects on/off -->
+<button class="snd-btn" id="musicBtn" type="button" title="Background music">🎵 Music: On</button>
+<button class="snd-btn" id="sfxBtn" type="button" title="Sound effects">🔊 Sounds: On</button>
+</div>
+<div id="progress" style="display:flex;gap:5px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;"></div>
+
+<div id="scene" class="scene" style="position:relative;background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:14px;">
+<svg viewBox="0 0 600 280" style="width:100%;display:block;" aria-label="Rabbit scene">
+<defs>
+<linearGradient id="furGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b89878"/><stop offset="100%" stop-color="#9a7b5f"/></linearGradient>
+<linearGradient id="bellyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e6d4"/><stop offset="100%" stop-color="#e0cdb6"/></linearGradient>
+<radialGradient id="cheekGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c9a98a"/><stop offset="100%" stop-color="#a8896d"/></radialGradient>
+<linearGradient id="earInner" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0b8c0"/><stop offset="100%" stop-color="#e098a4"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="600" height="230" fill="#e0f2fe"/>
+<circle id="sun" cx="520" cy="42" r="26" fill="#fde68a"/>
+<g id="cloud1" fill="#ffffff" opacity="0.92"><ellipse cx="120" cy="52" rx="30" ry="13"/><ellipse cx="146" cy="46" rx="24" ry="15"/><ellipse cx="94" cy="56" rx="20" ry="11"/></g>
+<g id="cloud2" fill="#ffffff" opacity="0.75"><ellipse cx="380" cy="80" rx="26" ry="11"/><ellipse cx="400" cy="74" rx="20" ry="12"/></g>
+<rect x="0" y="230" width="600" height="50" fill="#bbf7d0"/>
+<rect x="0" y="230" width="600" height="6" fill="#86efac"/>
+<g stroke="#4ade80" stroke-width="2" stroke-linecap="round" fill="none">
+<path class="grass" d="M60 232 q2 -10 0 -16 M64 232 q4 -8 6 -14 M56 232 q-4 -8 -6 -14"/>
+<path class="grass" style="animation-delay:-1s" d="M250 232 q2 -10 0 -16 M254 232 q4 -8 6 -14 M246 232 q-4 -8 -6 -14"/>
+<path class="grass" style="animation-delay:-2s" d="M520 232 q2 -10 0 -16 M524 232 q4 -8 6 -14 M516 232 q-4 -8 -6 -14"/>
+</g>
+<g id="carrot" class="prop"><path d="M398 206 L414 234 L382 234 Z" fill="#fb923c"/><path d="M390 208 q-7 -14 1 -19 M398 206 q-1 -16 7 -17 M405 208 q9 -12 15 -7" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+<g id="bowl" class="prop"><ellipse cx="400" cy="228" rx="22" ry="7" fill="#60a5fa"/><path d="M378 228 q22 18 44 0 Z" fill="#3b82f6"/><ellipse cx="400" cy="227" rx="18" ry="4" fill="#93c5fd"/></g>
+<g id="pot" class="prop"><rect x="382" y="208" width="36" height="24" rx="4" fill="#a16207"/><rect x="378" y="204" width="44" height="7" rx="3" fill="#854d0e"/><circle cx="400" cy="214" r="4" fill="#f59e0b"/></g>
+<g id="steam" class="fx" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round"><path class="st1" d="M392 200 q4 -8 0 -14 q-4 -6 0 -12"/><path class="st2" d="M400 200 q4 -8 0 -14 q-4 -6 0 -12"/><path class="st3" d="M408 200 q4 -8 0 -14 q-4 -6 0 -12"/></g>
+<g id="bed" class="prop"><rect x="358" y="216" width="72" height="14" rx="6" fill="#fca5a5"/><rect x="358" y="209" width="22" height="12" rx="4" fill="#fecaca"/></g>
+<text id="zzz" class="prop" x="412" y="178" font-size="22" fill="#64748b" font-weight="700" font-family="Fredoka, sans-serif">Zzz</text>
+<g id="box" class="prop"><rect x="318" y="196" width="56" height="34" rx="4" fill="#a16207"/><rect x="318" y="196" width="56" height="8" rx="2" fill="#854d0e"/></g>
+<g id="book" class="prop"><rect x="136" y="216" width="40" height="24" rx="3" fill="#3b82f6"/><line x1="156" y1="216" x2="156" y2="240" stroke="#1e40af" stroke-width="2"/></g>
+<g id="paper" class="prop"><rect x="136" y="218" width="44" height="26" rx="3" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/><line x1="144" y1="226" x2="172" y2="226" stroke="#94a3b8" stroke-width="1.5"/><line x1="144" y1="232" x2="168" y2="232" stroke="#94a3b8" stroke-width="1.5"/><line x1="144" y1="238" x2="160" y2="238" stroke="#94a3b8" stroke-width="1.5"/></g>
+<g id="hammer" class="prop"><rect x="160" y="200" width="6" height="26" rx="2" fill="#a16207" transform="rotate(20 163 213)"/><rect x="150" y="196" width="22" height="10" rx="2" fill="#64748b" transform="rotate(20 161 201)"/></g>
+<!-- NOTE: this SVG blackboard keeps id="board" (used by the teach animation). The game area is now id="gameBoard". -->
+<g id="board" class="prop"><rect x="380" y="120" width="90" height="60" rx="4" fill="#166534"/><rect x="376" y="178" width="8" height="40" fill="#a16207"/><rect x="466" y="178" width="8" height="40" fill="#a16207"/><text x="395" y="148" font-size="16" fill="#fff" font-family="Fredoka">A B C</text><text x="395" y="168" font-size="14" fill="#bbf7d0" font-family="Fredoka">1 2 3</text></g>
+<g id="wateringcan" class="prop"><rect x="376" y="192" width="26" height="20" rx="3" fill="#60a5fa"/><path d="M402 197 l14 -6 l2 8 l-14 4 Z" fill="#60a5fa"/></g>
+<g id="flower" class="prop" style="transform-box:fill-box;transform-origin:bottom;"><line x1="440" y1="230" x2="440" y2="196" stroke="#16a34a" stroke-width="4"/><circle cx="440" cy="189" r="8" fill="#f472b6"/><circle cx="430" cy="193" r="7" fill="#f472b6"/><circle cx="450" cy="193" r="7" fill="#f472b6"/><circle cx="435" cy="183" r="7" fill="#f472b6"/><circle cx="445" cy="183" r="7" fill="#f472b6"/><circle cx="440" cy="189" r="4" fill="#fde047"/></g>
+<g id="fox" class="prop"><ellipse cx="492" cy="216" rx="22" ry="15" fill="#f97316"/><circle cx="510" cy="206" r="12" fill="#f97316"/><path d="M504 196 l-4 -10 l8 4 Z" fill="#f97316"/><path d="M514 196 l4 -10 l-8 4 Z" fill="#f97316"/><circle cx="514" cy="204" r="1.8" fill="#333"/><path d="M470 216 q-14 0 -16 -10" stroke="#f97316" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+<g id="gift" class="prop"><rect x="448" y="210" width="20" height="20" rx="2" fill="#ec4899"/><rect x="456" y="210" width="4" height="20" fill="#fde047"/><rect x="448" y="218" width="20" height="4" fill="#fde047"/></g>
+<g id="ball" class="prop"><circle cx="460" cy="222" r="11" fill="#ef4444"/><path d="M449 222 q11 -8 22 0" stroke="#fff" stroke-width="2" fill="none"/></g>
+<g id="cart" class="prop"><rect x="430" y="204" width="40" height="22" rx="3" fill="#b45309"/><circle cx="440" cy="230" r="6" fill="#44403c"/><circle cx="462" cy="230" r="6" fill="#44403c"/><line x1="430" y1="210" x2="408" y2="222" stroke="#78350f" stroke-width="3"/></g>
+<g id="tub" class="prop"><ellipse cx="400" cy="228" rx="30" ry="8" fill="#a78bfa"/><path d="M370 228 q30 22 60 0 Z" fill="#8b5cf6"/><ellipse cx="400" cy="226" rx="24" ry="5" fill="#c4b5fd"/></g>
+<g id="giftbox" class="prop"><rect x="388" y="210" width="34" height="22" rx="2" fill="#f59e0b"/><rect x="402" y="210" width="6" height="22" fill="#dc2626"/><g id="lid"><rect x="384" y="204" width="42" height="8" rx="2" fill="#fbbf24"/><rect x="402" y="204" width="6" height="8" fill="#dc2626"/></g></g>
+<g id="hill" class="prop"><path d="M280 230 Q400 120 520 230 Z" fill="#86efac"/><path d="M280 230 Q400 132 520 230" stroke="#4ade80" stroke-width="3" fill="none"/></g>
+<g id="pond" class="prop"><ellipse cx="400" cy="228" rx="80" ry="14" fill="#7dd3fc"/><ellipse cx="400" cy="226" rx="70" ry="10" fill="#bae6fd"/></g>
+<g id="bird" class="prop"><g id="birdwing"><path d="M0 0 q8 -10 16 0 q-8 4 -16 0" fill="#334155"/></g><circle cx="8" cy="2" r="5" fill="#334155"/><path d="M13 1 l6 -1 l-4 4 Z" fill="#f59e0b"/></g>
+<g id="notes" class="prop" font-family="Fredoka, sans-serif" font-weight="700"><text x="150" y="150" font-size="26" fill="#8b5cf6">♪</text><text x="182" y="128" font-size="19" fill="#ec4899">♫</text><text x="208" y="158" font-size="22" fill="#0891b2">♪</text></g>
+<g id="bubble" class="prop"><rect x="140" y="130" width="70" height="34" rx="14" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/><circle cx="150" cy="147" r="3" fill="#64748b"/><circle cx="162" cy="147" r="3" fill="#64748b"/><circle cx="174" cy="147" r="3" fill="#64748b"/><path d="M160 164 l-6 10 l14 -8 Z" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/></g>
+<g id="thought" class="prop"><circle cx="170" cy="150" r="20" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/><circle cx="152" cy="172" r="6" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/><circle cx="146" cy="184" r="3.5" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/><text x="163" y="158" font-size="22" fill="#6366f1" font-weight="700" font-family="Fredoka">?</text></g>
+<g id="umbrella" class="prop"><path d="M120 150 q40 -36 80 0 Z" fill="#ef4444"/><path d="M140 150 q20 -18 40 0" stroke="#fff" stroke-width="2" fill="none"/><line x1="160" y1="150" x2="160" y2="186" stroke="#78350f" stroke-width="3"/><path d="M160 186 q0 6 -6 6" stroke="#78350f" stroke-width="3" fill="none"/></g>
+<g id="dust" class="fx" fill="#d6c7a8"><circle class="d1" cx="120" cy="228" r="4"/><circle class="d2" cx="112" cy="230" r="3"/><circle class="d3" cx="128" cy="231" r="3.5"/></g>
+<g id="sparkles" class="fx" fill="#fbbf24"><path class="s1" d="M290 160 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 Z"/><path class="s2" d="M330 140 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 Z" fill="#f472b6"/><path class="s3" d="M260 140 l2.5 7 l7 2.5 l-7 2.5 l-2.5 7 l-2.5 -7 l-7 -2.5 l7 -2.5 Z" fill="#60a5fa"/><path class="s4" d="M310 120 l2.5 7 l7 2.5 l-7 2.5 l-2.5 7 l-2.5 -7 l-7 -2.5 l7 -2.5 Z" fill="#34d399"/></g>
+<g id="raindrops" class="fx" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"><line class="r" x1="130" y1="100" x2="126" y2="114"/><line class="r" style="animation-delay:.15s" x1="150" y1="90" x2="146" y2="104"/><line class="r" style="animation-delay:.3s" x1="170" y1="110" x2="166" y2="124"/><line class="r" style="animation-delay:.45s" x1="190" y1="95" x2="186" y2="109"/><line class="r" style="animation-delay:.6s" x1="210" y1="105" x2="206" y2="119"/><line class="r" style="animation-delay:.2s" x1="140" y1="120" x2="136" y2="134"/></g>
+<g id="tears" class="fx" fill="#60a5fa"><ellipse class="t1" cx="166" cy="188" rx="3" ry="4.5"/><ellipse class="t2" cx="172" cy="190" rx="2.5" ry="4"/></g>
+<g id="bubbles" class="fx" fill="#c4b5fd" opacity=".8"><circle class="b1" cx="390" cy="220" r="4"/><circle class="b2" cx="405" cy="222" r="5.5"/><circle class="b3" cx="415" cy="218" r="3.5"/></g>
+<g id="drops" class="fx" fill="#60a5fa"><circle class="wd" cx="424" cy="200" r="2.5"/><circle class="wd" style="animation-delay:.2s" cx="430" cy="202" r="2"/><circle class="wd" style="animation-delay:.4s" cx="420" cy="204" r="2"/></g>
+<g id="rabbit" style="transform:translate(120px,230px);">
+<g id="rbody">
+  <g id="tail"><circle cx="-30" cy="-20" r="8" fill="#fafafa" stroke="#e8e0d4" stroke-width="1"/><circle cx="-34" cy="-24" r="5" fill="#fafafa"/><circle cx="-26" cy="-26" r="4.5" fill="#fafafa"/></g>
+  <g class="leg legA" style="transform:translate(-14px,-16px);"><ellipse cx="0" cy="10" rx="5.5" ry="12" fill="#8b6f4e"/><ellipse cx="3" cy="21" rx="7" ry="4" fill="#7d6244"/></g>
+  <g class="leg legB" style="transform:translate(-8px,-16px);"><ellipse cx="0" cy="10" rx="5.5" ry="12" fill="#9a7b5f"/><ellipse cx="3" cy="21" rx="7" ry="4" fill="#8b6f4e"/></g>
+  <ellipse cx="0" cy="-24" rx="24" ry="19" fill="url(#furGrad)" stroke="#8b6f4e" stroke-width="1.2"/>
+  <ellipse cx="4" cy="-18" rx="15" ry="13" fill="url(#bellyGrad)"/>
+  <g class="leg legB" style="transform:translate(14px,-18px);"><ellipse cx="0" cy="9" rx="5" ry="11" fill="#9a7b5f"/><ellipse cx="2" cy="19" rx="6" ry="3.5" fill="#8b6f4e"/></g>
+  <g class="leg legA" style="transform:translate(20px,-18px);"><ellipse cx="0" cy="9" rx="5" ry="11" fill="#a8896d"/><ellipse cx="2" cy="19" rx="6" ry="3.5" fill="#9a7b5f"/></g>
+  <g id="arm" style="transform-box:fill-box;transform-origin:50% 0%;transform:translate(22px,-24px);"><ellipse cx="0" cy="8" rx="5" ry="9" fill="#a8896d" stroke="#8b6f4e" stroke-width="1"/><ellipse cx="0" cy="16" rx="5.5" ry="5" fill="#b89878"/></g>
+  <g id="head" style="transform-box:fill-box;transform-origin:50% 100%;transform:translate(18px,-44px);">
+    <g id="ears">
+      <ellipse cx="-4" cy="-34" rx="6" ry="22" fill="#a8896d" stroke="#8b6f4e" stroke-width="1.2" transform="rotate(-10 -4 -34)"/>
+      <ellipse cx="-4" cy="-32" rx="3" ry="16" fill="url(#earInner)" transform="rotate(-10 -4 -32)"/>
+      <ellipse cx="8" cy="-36" rx="6" ry="23" fill="#b89878" stroke="#8b6f4e" stroke-width="1.2" transform="rotate(7 8 -36)"/>
+      <ellipse cx="8" cy="-34" rx="3" ry="17" fill="url(#earInner)" transform="rotate(7 8 -34)"/>
+    </g>
+    <ellipse cx="0" cy="0" rx="18" ry="16" fill="url(#furGrad)" stroke="#8b6f4e" stroke-width="1.2"/>
+    <circle cx="7" cy="3" r="9" fill="url(#cheekGrad)"/>
+    <ellipse cx="0" cy="6" rx="9" ry="6" fill="#f3e6d4"/>
+    <g id="eye"><ellipse cx="5" cy="-4" rx="3.6" ry="4.2" fill="#2b1f14"/><circle cx="6.2" cy="-5.2" r="1.3" fill="#ffffff"/></g>
+    <path d="M-2 -11 q5 -2.5 10 -1" stroke="#7d6244" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".6"/>
+    <path d="M15 1 l4 2 -4 2 q-3 -1.5 0 -4 Z" fill="#d4708a"/>
+    <path d="M15 5 q-1 3 -4 3 M15 5 q1 3 4 2" stroke="#5b4632" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <g stroke="#5b4632" stroke-width="0.8" stroke-linecap="round" opacity=".55"><path d="M8 -1 q12 -2 22 -4"/><path d="M8 2 q12 0 23 1"/><path d="M8 5 q11 3 20 6"/></g>
+  </g>
+</g>
+</g>
+</svg>
+</div>
+
+<div id="successBanner" style="display:none;margin-bottom:12px;padding:13px;border-radius:14px;background:var(--accent-soft);border:1px solid var(--accent);" class="pop-in">
+<div style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:5px;">Sentence correct! The rabbit did it.</div>
+<div id="starRow" style="margin-bottom:9px;"></div>
+<button class="btn btn-primary" id="nextBtn">Next Sentence</button>
+</div>
+
+<div id="completion" style="display:none;margin-bottom:12px;padding:16px;border-radius:14px;background:var(--card);border:1px solid var(--border);" class="pop-in">
+<div style="font-size:20px;font-weight:700;margin-bottom:5px;">Class set complete!</div>
+<div style="color:var(--muted);margin-bottom:11px;">You earned <span id="finalStars" style="color:#f59e0b;font-weight:700;">0</span> stars. Try another class above!</div>
+<button class="btn btn-primary" id="playAgain">Replay This Class</button>
+</div>
+
+<!-- GAME AREA (renamed from id="board" to id="gameBoard" to fix the duplicate-id bug) -->
+<div id="gameBoard">
+<div class="slots" id="slots"></div>
+<div class="bank" id="bank"></div>
+<div style="display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;">
+<button class="btn btn-primary" id="checkBtn" disabled>Check Sentence</button>
+<button class="btn btn-secondary" id="hintBtn">Hint</button>
+<button class="btn btn-secondary" id="clearBtn">Clear</button>
+</div>
+<p style="color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.6;">Drag a word into a slot (works with mouse and touch), or just tap a word to place it. Tap a placed word to send it back.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+var SENTENCES = {"PP":[["རི་བོང་ འགྱོ་ གི །","walk","go"],["རི་བོང་ འོང་ གི །","walk","come"],["རི་བོང་ སྡོད་ གི །","sit","sit"],["རི་བོང་ ལོང་ གི །","stand","stand"],["རི་བོང་ ལམ་འགྱོ་ གི །","walk","walk"],["རི་བོང་ རྒྱུག་ གི །","run","run"],["རི་བོང་ མཆོང་ གི །","jump","jump"],["རི་བོང་ ཉལ་ གི །","sleep","sleep"],["རི་བོང་ ལྷོང་ གི །","wake","wake up"],["རི་བོང་ ཟ་ གི །","eat","eat"],["རི་བོང་ འཐུང་ གི །","drink","drink"],["རི་བོང་ བཞེས་སྒོ་འབད་ གི །","cook","cook food"],["རི་བོང་ རྩེདམོ་རྩེ་ གི །","dance","play"],["རི་བོང་ ལཱ་འབད་ གི །","work","work"],["རི་བོང་ ལྷག་ གི །","read","read"],["རི་བོང་ བྲིས་ གི །","write","write"],["རི་བོང་ སླབ་ གི །","speak","speak"],["རི་བོང་ ཉན་ གི །","listen","listen"],["རི་བོང་ མཐོང་ གི །","look","see"],["རི་བོང་ བལྟ་ གི །","look","look"],["རི་བོང་ གོ་ གི །","listen","hear"],["རི་བོང་ རེག་ གི །","look","touch"],["རི་བོང་ བཟུང་ གི །","catch","hold"],["རི་བོང་ སྤྲོད་ གི །","give","give"],["རི་བོང་ ལེན་ གི །","catch","take"],["རི་བོང་ བཞག་ གི །","push","put"],["རི་བོང་ འབག་ གི །","give","bring"],["རི་བོང་ འབག་ གི །","give","carry"]],"I":[["རི་བོང་ འཁྱུ་ གི །","wash","wash"],["རི་བོང་ གཟུགས་འཁྱུ་ གི །","wash","bathe"],["རི་བོང་ སོ་བཀྲུ་རྐྱབ་ གི །","wash","brush"],["རི་བོང་ ཧིང་སངས་ས་བཟོ་ གི །","wash","clean"],["རི་བོང་ ཁ་ཕྱེ་ གི །","open","open"],["རི་བོང་ ཁ་བསྡམ་ གི །","open","close"],["རི་བོང་ འགོ་བཙུགས་ གི །","work","start"],["རི་བོང་ མཇུག་བསྡུ་ གི །","dance","finish"],["རི་བོང་ བཀག་ གི །","sit","stop"],["རི་བོང་ བསྒུག་ གི །","sit","wait"],["རི་བོང་ ཆ་རོགས་འབད་ གི །","give","help"],["རི་བོང་ དྲིས་ གི །","speak","ask"],["རི་བོང་ ལན་སླབ་ གི །","speak","answer"],["རི་བོང་ འབོ་ གི །","speak","call"],["རི་བོང་ འཕྱད་ གི །","walk","meet"],["རི་བོང་ བལྟ་སྐོར་འབད་ གི །","walk","visit"],["རི་བོང་ སྡོད་ གི །","sit","live"],["རི་བོང་ སྡོད་ གི །","sit","stay"],["རི་བོང་ བཞག་ གི །","walk","leave"],["རི་བོང་ ལོག་འོང་ གི །","walk","return"],["རི་བོང་ ཉོ་ གི །","give","buy"],["རི་བོང་ བཙོང་ གི །","give","sell"],["རི་བོང་ སྤྲོད་ གི །","give","pay"],["རི་བོང་ ལག་ལེན་འཐབ་ གི །","work","use"],["རི་བོང་ བཟོ་ གི །","work","make"],["རི་བོང་ འབད་ གི །","work","do"],["རི་བོང་ དཔའ་བཅམ་ནི་ གི །","think","try"],["རི་བོང་ དགོ གི །","think","need"],["རི་བོང་ དགོ་ གི །","think","want"],["རི་བོང་ དགའ་ གི །","dance","like"]],"II":[["རི་བོང་ འཛེག་ གི །","climb","climb"],["རི་བོང་ གོབ་འགྱོ་ནི གི །","climb","crawl"],["རི་བོང་ རྩལ་རྐྱབ་ནི གི །","swim","swim"],["རི་བོང་ འཕུར་ གི །","fly","fly"],["རི་བོང་ ཞབས་ཁྲ་རྐྱབ་ གི །","dance","dance"],["རི་བོང་ བསྒྱིར་ གི །","dance","turn"],["རི་བོང་ སྤར་ གི །","walk","move"],["རི་བོང་ བུད་ གི །","fall","fall"],["རི་བོང་ ལོང་ གི །","stand","rise"],["རི་བོང་ འཛུལ་ གི །","walk","enter"],["རི་བོང་ ཕྱི་ཁར་འཐོན་ གི །","walk","exit"],["རི་བོང་ བརྒལ་ གི །","walk","cross"],["རི་བོང་ རྗེས་སུ་འབྲང་ གི །","walk","follow"],["རི་བོང་ འགོ་ཁྲིད་འབད་ གི །","walk","lead"],["རི་བོང་ འགྲོ་འགྲུལ་འབད་ གི །","walk","travel"],["རི་བོང་ བཞོན་ གི །","walk","ride"],["རི་བོང་ སྣུམ་འཁོར་གཏང་ནི་ གི །","walk","drive"],["རི་བོང་ ལྷབ་ གི །","read","learn"],["རི་བོང་ སློབ་སྟོན་འབད་ནི་ གི །","teach","teach"],["རི་བོང་ ལྷབ་སྦྱོང་འབད་ནི་ གི །","read","study"],["རི་བོང་ པར་བྲི་ནི་ གི །","draw","draw"],["རི་བོང་ ཚོན་གཏང་ནི་ གི །","draw","colour"],["རི་བོང་ གྱངས་ཁ་རྐྱབ་ གི །","read","count"],["རི་བོང་ སྦྱོར་ཀློག་རྐྱབ་ གི །","read","spell"],["རི་བོང་ འདྲ་བཤུས་རྐྱབ་ གི །","write","copy"],["རི་བོང་ སྦྱང་བ་འབད་ གི །","work","practise"],["རི་བོང་ དྲན་ གི །","think","remember"],["རི་བོང་ བརྗེད་ གི །","think","forget"],["རི་བོང་ ཧ་གོ་ གི །","think","understand"],["རི་བོང་ བཤད་པ་རྐྱབ་ གི །","teach","explain"]],"III":[["རི་བོང་ སྟོན་ གི །","teach","show"],["རི་བོང་ སླབ་ གི །","speak","tell"],["རི་བོང་ ལོག་སྟེ་སླབ་ གི །","speak","repeat"],["རི་བོང་ མཐུན་སྒྲིག་འབད་ གི །","teach","match"],["རི་བོང་ པད་སྐོར་བསྒྱིར་ནི་ གི །","draw","circle"],["རི་བོང་ སླབ་ གི །","speak","say"],["རི་བོང་ གྲོས་བསྡུར་འབད་ གི །","speak","discuss"],["རི་བོང་ འགྲེལ་བཤད་འབད་ གི །","speak","describe"],["རི་བོང་ སྐད་རྐྱབ་ གི །","sing","shout"],["རི་བོང་ གསངས་ས་སླབ་ནི་ གི །","speak","whisper"],["རི་བོང་ མགྱོནམ་འབོ་ནི་ གི །","speak","invite"],["རི་བོང་ ཁ་བཟང་འབད་ནི་ གི །","wave","greet"],["རི་བོང་ བཀའ་དྲིན་བསམ་ནི་ གི །","wave","thank"],["རི་བོང་ ཁས་ལེན་འབད་ གི །","speak","promise"],["རི་བོང་ ཁ་འཆམ་ གི །","dance","agree"],["རི་བོང་ མ་འཆམ་ གི །","cry","disagree"],["རི་བོང་ ཉེན་བརྡ་འབད་ གི །","speak","warn"],["རི་བོང་ བསླབ་བྱ་བྱིན་ གི །","speak","advise"],["རི་བོང་ བསམ་འཆར་བཤད་ གི །","speak","suggest"],["རི་བོང་ མནོ་བསམ་གཏང་ གི །","think","think"],["རི་བོང་ ཤེས་ གི །","think","know"],["རི་བོང་ ཡིད་ཆེས་བསྐྱེད་ གི །","think","believe"],["རི་བོང་ ཐག་བཅད་ གི །","think","decide"],["རི་བོང་ གདམ་ཁ་རྐྱབ་ གི །","think","choose"],["རི་བོང་ བསྡུར་བསྡོམས་འབད་ གི །","think","compare"],["རི་བོང་ བསམ་བློ་གཏང་ གི །","think","imagine"],["རི་བོང་ ཚོད་དཔག་འབད་ གི །","think","guess"],["རི་བོང་ ངོ་ཤེས་ གི །","think","recognize"],["རི་བོང་ ཚོལ་འཐོབ་ནི་ གི །","think","discover"],["རི་བོང་ དཀའ་ངལ་སེལ་ གི །","think","solve"]],"IV":[["རི་བོང་ འཆར་གཞི་བཟོ་ གི །","think","plan"],["རི་བོང་ བརྟག་དཔྱད་འབད་ གི །","think","examine"],["རི་བོང་ ཞིབ་འཚོལ་འབད་ གི །","think","investigate"],["རི་བོང་ དཔྱད་ཞིབ་འབད་ གི །","think","analyze"],["རི་བོང་ བྱམས་པ་བྱིན་ནི་ གི །","dance","love"],["རི་བོང་ མ་དགའཝ་བསྐྱེད་ གི །","cry","hate"],["རི་བོང་ སྤྲོ་བ་འཐོན་ གི །","dance","enjoy"],["རི་བོང་ འདྲོགས་ གི །","cry","fear"],["རི་བོང་ ཚ་གྱང་ལང་ནི་ གི །","cry","worry"],["རི་བོང་ རེ་བ་བསྐྱེད་ གི །","dance","hope"],["རི་བོང་ རེ་བ་བསྐྱེད་ གི །","dance","wish"],["རི་བོང་ དགའ་འཛུམ་སྟོན་ནི་ གི །","dance","smile"],["རི་བོང་ བགའ་ གི །","dance","laugh"],["རི་བོང་ སྔུ་ གི །","cry","cry"],["རི་བོང་ སེམས་ཁར་ཕོག་ གི །","cry","hurt"],["རི་བོང་ དྲན་ གི །","cry","miss"],["རི་བོང་ ཡིད་ཆེས་བསྐྱེད་ གི །","dance","trust"],["རི་བོང་ བརྩེ་བ་བསྐྱེད་ གི །","dance","care"],["རི་བོང་ གུས་ཞབས་འབད་ གི །","dance","respect"],["རི་བོང་ དགོངས་ཡངས་གནང་ གི །","dance","forgive"],["རི་བོང་ བཟུང་ གི །","catch","hold"],["རི་བོང་ བཟུང་ གི །","catch","catch"],["རི་བོང་ གཡུག་བཀོ་ནི་ གི །","catch","throw"],["རི་བོང་ རྡོག་ཐེ་རྐྱབ་ནི་ གི །","catch","kick"],["རི་བོང་ འཕུལ་ནི་ གི །","push","push"],["རི་བོང་ འཐེན་ གི །","push","pull"],["རི་བོང་ གཏུབ་ གི །","draw","cut"],["རི་བོང་ བཅག་ གི །","fall","break"],["རི་བོང་ ཉམས་བཅོས་འབད་ གི །","work","fix"],["རི་བོང་ བཟོ་ གི །","work","build"],["རི་བོང་ ཚོན་གཏང་ནི་ གི །","draw","paint"],["རི་བོང་ བལྟབ་ནི་ གི །","draw","fold"],["རི་བོང་ སྤེད་ནི་ གི །","draw","tear"],["རི་བོང་ བསྡམ་ གི །","draw","tie"],["རི་བོང་ བཀང་ གི །","water","fill"],["རི་བོང་ སྟོངམ་བཏོན་ནི་ གི །","water","empty"],["རི་བོང་ བཀབ་ གི །","water","cover"],["རི་བོང་ སྦོམ་ནི་ གི །","bloom","grow"],["རི་བོང་ མེ་ཏོག་ཤར་ གི །","bloom","bloom"],["རི་བོང་ འཐོན་ནི་ གི །","bloom","flow"]],"V":[["རི་བོང་ ཆརཔ་རྐྱབ་ གི །","rain","rain"],["རི་བོང་ ཁཝ་རྐྱབ་ གི །","rain","snow"],["རི་བོང་ འོད་འཐོན་ནི་ གི །","rain","shine"],["རི་བོང་ རླུང་འཕུར་ གི །","rain","blow"],["རི་བོང་ འབར་ གི །","rain","burn"],["རི་བོང་ ཤི་ གི །","sleep","die"],["རི་བོང་ སྒོང་རྡོག་བརྟོལ་ཏེ་སྐྱེས་ གི །","bloom","hatch"],["རི་བོང་ སྒོང་རྡོག་བུད་ གི །","bloom","lay eggs"],["རི་བོང་ འཚོལ་ནི་ གི །","eat","hunt"],["རི་བོང་ སོ་བཏབ་ གི །","eat","bite"],["རི་བོང་ ཧབ་ གི །","sing","bark"],["རི་བོང་ རྩྭ་ཟ་བཅུག་ནི་ གི །","eat","graze"],["རི་བོང་ བགོ་བཤའ་རྐྱབ་ གི །","give","share"],["རི་བོང་ ལེན་ནི་ གི །","catch","receive"],["རི་བོང་ ཁ་ལུ་ཉན་ནི་ གི །","sit","obey"],["རི་བོང་ སྲུང་སྐྱོབ་འབད་ གི །","dance","protect"],["རི་བོང་ བསྲུང་ནི་ གི །","dance","save"],["རི་བོང་ རྒྱབ་སྐྱོར་འབད་ནི་ གི །","dance","support"],["རི་བོང་ མཉམ་འབྲེལ་འབད་ནི་ གི །","dance","cooperate"],["རི་བོང་ བཅའ་མར་གཏོགས་ནི་ གི །","dance","participate"],["རི་བོང་ ཁས་བླངས་འབད་ནི་ གི །","dance","volunteer"],["རི་བོང་ ཞབས་ཏོག་ཞུ་ གི །","give","serve"],["རི་བོང་ བཟོད་གསོལ་ཞུ་ནི་ གི །","wave","apologize"],["རི་བོང་ གཅིག་ཁར་བསྡོམ་ནི་ གི །","dance","unite"],["རི་བོང་ གསརཔ་བཟོ་ནི་ གི །","work","create"],["རི་བོང་ བཟོ་བཀོད་འབད་ནི་ གི །","work","design"],["རི་བོང་ ཡར་རྒྱས་གཏང་ གི །","work","develop"],["རི་བོང་ ལེགས་བཅོས་འབད་ གི །","work","improve"],["རི་བོང་ གྲ་སྒྲིག་འབད་ གི །","work","prepare"],["རི་བོང་ འགོ་འདྲེན་འཐབ་ གི །","work","organize"],["རི་བོང་ བསྡུ་ གི །","work","collect"],["རི་བོང་ བསྒྲིག་ གི །","work","arrange"],["རི་བོང་ ཚད་འཇལ་ གི །","think","measure"],["རི་བོང་ རྩིས་རྐྱབ་ གི །","think","calculate"],["རི་བོང་ ངོས་འཛིན་འབད་ གི །","think","identify"],["རི་བོང་ དབྱེ་ཁག་བཟོ་ གི །","think","classify"],["རི་བོང་ གདམ་ཁ་རྐྱབ་ གི །","think","select"],["རི་བོང་ དཔྱད་ཞིབ་འབད་ གི །","think","evaluate"],["རི་བོང་ ཞིབ་འཚོལ་འབད་ནི་ གི །","think","research"],["རི་བོང་ ཞིབ་རྟོག་འབད་ནི་ གི །","think","observe"]],"VI":[["རི་བོང་ སྔོན་དཔག་འབད་ནི་ གི །","think","predict"],["རི་བོང་ མཇུག་བསྡུ་ནི་ གི །","think","conclude"],["རི་བོང་ ཨེབ་ གི །","write","click"],["རི་བོང་ མཛུབ་གནོན་རྐྱབ་ གི །","write","type"],["རི་བོང་ བཏོན་གཏང་ནི་ གི །","write","delete"],["རི་བོང་ སྲོག་འཇོག་འབད་ གི །","dance","save"],["རི་བོང་ ཕབ་ལེན་འབད་ གི །","write","download"],["རི་བོང་ ཡོངས་འབྲེལ་ནང་བཙུགས་ གི །","write","upload"],["རི་བོང་ འཚོལ་ གི །","look","search"],["རི་བོང་ དཔར་བསྐྲུན་འབད་ གི །","write","print"],["རི་བོང་ སྦྱར་ གི །","write","paste"],["རི་བོང་ ཞུན་དག་འབད་ གི །","write","edit"],["རི་བོང་ གཏང་ གི །","give","send"],["རི་བོང་ མཐུད་ གི །","give","connect"],["རི་བོང་ མཐུད་བཅད་ གི །","give","disconnect"]]};
+
+var MOVING = {walk:1,run:1,jump:1,climb:1,swim:1,fall:1,sit:1,stand:1,wake:1,eat:1,drink:1,cook:1,sleep:1,water:1,wave:1,give:1,catch:1,push:1,wash:1,open:1,bloom:1,rain:1,dance:1};
+var RUNFAST = {run:1};
+var WAIT = {walk:3400,run:2600,jump:2800,climb:3400,swim:3400,fly:3200,fall:3200,sit:3200,stand:3200,wake:3200,dance:4000,eat:3400,drink:3400,cook:3400,sleep:3400,read:3000,write:3200,draw:3200,think:3200,work:3400,speak:3200,sing:3200,teach:3400,listen:3000,look:3000,cry:3200,wash:3400,open:3200,water:3400,wave:3400,give:3400,catch:3200,push:3400,bloom:3400,rain:3200};
+
+/* ================================================================
+   AUDIO SETUP  ->  put your sound file paths between the quotes.
+   Leave '' (empty) for any sound you don't have yet: it stays silent
+   and nothing breaks. Example:  background: 'audio/background.mp3'
+   ================================================================ */
+var AUDIO_FILES = {
+  background : '',   // looping background music (plays after the first tap/click)
+  pick       : '',   // when a word is picked up / tapped
+  drop       : '',   // when a word is placed in a slot
+  remove     : '',   // when a word goes back to the bank
+  correct    : '',   // sentence is correct
+  wrong      : '',   // sentence is wrong
+  hint       : '',   // Hint button
+  clear      : '',   // Clear button
+  next       : '',   // Next Sentence button
+  classChange: '',   // switching class (PP, I, II ...)
+  complete   : '',   // class set finished
+  star3      : '',   // optional: extra cheer for 3 stars
+  star2      : '',   // optional: for 2 stars
+  star1      : ''    // optional: for 1 star
+};
+
+/* Optional: a sound for each rabbit action (played when the sentence is correct).
+   Fill only the ones you want. */
+var ACTION_SOUNDS = {
+  walk:'', run:'', jump:'', climb:'', swim:'', fly:'', fall:'', sit:'', stand:'', wake:'',
+  dance:'', eat:'', drink:'', cook:'', sleep:'', read:'', write:'', draw:'', think:'', work:'',
+  speak:'', sing:'', teach:'', listen:'', look:'', cry:'', wash:'', open:'', water:'', wave:'',
+  give:'', catch:'', push:'', bloom:'', rain:''
+};
+
+/* Volume levels, 0 to 1 */
+var VOLUME = { background: 0.35, sfx: 0.8 };
+
+var musicOn = true, sfxOn = true, bgStarted = false, bgAudio = null, currentActionAudio = null;
+var sfxCache = {};
+
+function makeAudio(src, loop, vol){
+  if(!src) return null;
+  var a = new Audio(src);
+  a.preload = 'auto'; a.loop = !!loop; a.volume = vol;
+  a.addEventListener('error', function(){ /* missing file: ignore silently */ });
+  return a;
+}
+function playSfx(name){
+  if(!sfxOn) return;
+  var src = AUDIO_FILES[name]; if(!src) return;
+  if(!sfxCache[name]) sfxCache[name] = makeAudio(src, false, VOLUME.sfx);
+  var a = sfxCache[name]; if(!a) return;
+  try{ a.currentTime = 0; var p = a.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
+}
+function stopActionSound(){
+  if(currentActionAudio){ try{ currentActionAudio.pause(); currentActionAudio.currentTime = 0; }catch(e){} currentActionAudio = null; }
+}
+function playActionSound(act){
+  stopActionSound();
+  if(!sfxOn) return;
+  var src = ACTION_SOUNDS[act]; if(!src) return;
+  currentActionAudio = makeAudio(src, false, VOLUME.sfx);
+  if(currentActionAudio){ var p = currentActionAudio.play(); if(p && p.catch) p.catch(function(){}); }
+}
+function startBackground(){
+  if(bgStarted || !AUDIO_FILES.background) return;
+  bgStarted = true;
+  bgAudio = makeAudio(AUDIO_FILES.background, true, VOLUME.background);
+  if(bgAudio && musicOn){ var p = bgAudio.play(); if(p && p.catch) p.catch(function(){ bgStarted = false; }); }
+}
+/* Browsers block autoplay, so the music starts on the first tap/click/key */
+['pointerdown','keydown','touchstart'].forEach(function(ev){
+  window.addEventListener(ev, startBackground, {once:false, passive:true});
+});
+
+var musicBtn = document.getElementById('musicBtn'), sfxBtn = document.getElementById('sfxBtn');
+musicBtn.addEventListener('click', function(){
+  musicOn = !musicOn;
+  musicBtn.textContent = musicOn ? '🎵 Music: On' : '🎵 Music: Off';
+  musicBtn.classList.toggle('off', !musicOn);
+  if(!bgAudio){ startBackground(); return; }
+  if(musicOn){ var p = bgAudio.play(); if(p && p.catch) p.catch(function(){}); } else bgAudio.pause();
+});
+sfxBtn.addEventListener('click', function(){
+  sfxOn = !sfxOn;
+  sfxBtn.textContent = sfxOn ? '🔊 Sounds: On' : '🔊 Sounds: Off';
+  sfxBtn.classList.toggle('off', !sfxOn);
+  if(!sfxOn) stopActionSound();
+});
+/* ================= END AUDIO SETUP ================= */
+
+var levels, currentLevel, attempts, totalStars, locked, currentCls='PP';
+totalStars=0; locked=false;
+
+var slotsEl=document.getElementById('slots'), bankEl=document.getElementById('bank'),
+checkBtn=document.getElementById('checkBtn'), hintBtn=document.getElementById('hintBtn'),
+clearBtn=document.getElementById('clearBtn'), scene=document.getElementById('scene'),
+successBanner=document.getElementById('successBanner'), starRow=document.getElementById('starRow'),
+nextBtn=document.getElementById('nextBtn'), completion=document.getElementById('completion'),
+finalStars=document.getElementById('finalStars'), playAgain=document.getElementById('playAgain'),
+levelLabel=document.getElementById('levelLabel'), progress=document.getElementById('progress'),
+board=document.getElementById('gameBoard'), starTotal=document.getElementById('starTotal'),
+classBar=document.getElementById('classBar');
+
+function setClass(cls){
+  currentCls=cls;
+  var btns=classBar.querySelectorAll('.cls-btn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.toggle('active', btns[i].dataset.cls===cls);
+  levels = SENTENCES[cls].map(function(s){return {text:s[0], words:s[0].split(/\s+/).filter(Boolean), action:s[1], en:s[2]};});
+  totalStars=0; starTotal.textContent='0';
+  buildProgress(); loadLevel(0);
+}
+classBar.addEventListener('click', function(e){
+  var b=e.target.closest('.cls-btn'); if(!b) return;
+  playSfx('classChange');
+  setClass(b.dataset.cls);
+});
+
+function shuffle(arr){var a=arr.slice(),i=a.length,j,t;while(i){j=Math.floor(Math.random()*i);i--;t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function buildProgress(){
+  progress.innerHTML='';
+  for(var i=0;i<levels.length;i++){
+    var d=document.createElement('span');
+    d.style.cssText='width:8px;height:8px;border-radius:50%;background:#cbd5e1;display:inline-block;transition:background .2s;';
+    d.id='dot-'+i; progress.appendChild(d);
+  }
+}
+function loadLevel(i){
+  stopActionSound();
+  currentLevel=i; attempts=0; locked=false;
+  scene.className='scene';
+  successBanner.style.display='none'; completion.style.display='none';
+  board.style.display='block';
+  levelLabel.textContent='Sentence '+(i+1)+' of '+levels.length+' · '+levels[i].en;
+  for(var k=0;k<levels.length;k++){
+    var dot=document.getElementById('dot-'+k);
+    if(dot) dot.style.background=(k<i)?'var(--accent)':(k===i?'var(--accent2)':'#cbd5e1');
+  }
+  slotsEl.innerHTML='';
+  var words=levels[i].words;
+  for(var s=0;s<words.length;s++){
+    var slot=document.createElement('div'); slot.className='slot'; slot.dataset.index=s; slotsEl.appendChild(slot);
+  }
+  bankEl.innerHTML='';
+  var shuffled=shuffle(words);
+  for(var w=0;w<shuffled.length;w++){
+    var t=document.createElement('div'); t.className='word-tile'; t.textContent=shuffled[w];
+    t.id='tile-'+i+'-'+w; bankEl.appendChild(t);
+  }
+  updateCheckState();
+}
+function findEmptySlot(){
+  var slots=slotsEl.querySelectorAll('.slot');
+  for(var i=0;i<slots.length;i++) if(!slots[i].querySelector('.word-tile')) return slots[i];
+  return null;
+}
+function allFilled(){return !findEmptySlot();}
+function updateCheckState(){
+  checkBtn.disabled = locked || !allFilled();
+  slotsEl.querySelectorAll('.slot').forEach(function(sl){sl.classList.remove('wrong','correct','shake');});
+}
+function placeTile(tile, targetSlot){
+  var existing=targetSlot.querySelector('.word-tile');
+  if(existing) bankEl.appendChild(existing);
+  targetSlot.appendChild(tile);
+}
+
+/* ===== POINTER-BASED DRAG (reliable on mouse + touch) ===== */
+var dragTile=null, dragClone=null, grabX=0, grabY=0, moved=false, suppressClick=false;
+board.addEventListener('pointerdown', function(e){
+  if(locked) return;
+  var tile=e.target.closest('.word-tile'); if(!tile) return;
+  dragTile=tile; moved=false;
+  var r=tile.getBoundingClientRect();
+  grabX=e.clientX - r.left; grabY=e.clientY - r.top;
+});
+board.addEventListener('pointermove', function(e){
+  if(!dragTile) return;
+  if(!moved){
+    moved=true; suppressClick=true;
+    playSfx('pick');
+    dragClone=dragTile.cloneNode(true);
+    dragClone.classList.add('drag-clone');
+    dragClone.classList.remove('dragging');
+    var w=dragTile.getBoundingClientRect().width;
+    dragClone.style.width=w+'px';
+    dragClone.style.left=(e.clientX-grabX)+'px';
+    dragClone.style.top=(e.clientY-grabY)+'px';
+    document.body.appendChild(dragClone);
+    dragTile.classList.add('dragging');
+  }
+  if(dragClone){
+    dragClone.style.left=(e.clientX-grabX)+'px';
+    dragClone.style.top=(e.clientY-grabY)+'px';
+  }
+  var el=document.elementFromPoint(e.clientX, e.clientY);
+  var slot=el? el.closest('.slot'):null;
+  slotsEl.querySelectorAll('.slot').forEach(function(s){s.classList.toggle('hover', s===slot);});
+  e.preventDefault();
+}, {passive:false});
+function endDrag(e){
+  if(!dragTile) return;
+  var tile=dragTile; dragTile=null;
+  if(dragClone){dragClone.remove(); dragClone=null;}
+  tile.classList.remove('dragging');
+  slotsEl.querySelectorAll('.slot').forEach(function(s){s.classList.remove('hover');});
+  if(moved){
+    var el=document.elementFromPoint(e.clientX, e.clientY);
+    var slot=el? el.closest('.slot'):null;
+    var bk=el? el.closest('.bank'):null;
+    if(slot){ placeTile(tile, slot); playSfx('drop'); }
+    else if(bk){ bankEl.appendChild(tile); playSfx('remove'); }
+    updateCheckState();
+    setTimeout(function(){suppressClick=false;}, 80);
+  } else {
+    suppressClick=false;
+  }
+}
+window.addEventListener('pointerup', endDrag);
+window.addEventListener('pointercancel', function(e){moved=false; endDrag(e);});
+
+/* tap to place / tap placed tile to send back */
+board.addEventListener('click', function(e){
+  if(suppressClick){suppressClick=false; return;}
+  if(locked) return;
+  var tile=e.target.closest('.word-tile'); if(!tile) return;
+  if(tile.parentElement===bankEl){var slot=findEmptySlot(); if(slot){ slot.appendChild(tile); playSfx('drop'); }}
+  else if(tile.parentElement.classList.contains('slot')){bankEl.appendChild(tile); playSfx('remove');}
+  updateCheckState();
+});
+
+checkBtn.addEventListener('click', function(){
+  if(locked||!allFilled()) return;
+  attempts++;
+  var level=levels[currentLevel];
+  var slotEls=slotsEl.querySelectorAll('.slot');
+  var allCorrect=true;
+  slotEls.forEach(function(slot,i){
+    var tile=slot.querySelector('.word-tile');
+    var w=tile? tile.textContent.trim():'';
+    slot.classList.remove('wrong','correct','shake');
+    if(w===level.words[i]) slot.classList.add('correct'); else {allCorrect=false; slot.classList.add('wrong');}
+  });
+  if(allCorrect) success();
+  else {
+    playSfx('wrong');
+    slotEls.forEach(function(sl){if(sl.classList.contains('wrong')){sl.classList.remove('shake'); void sl.offsetWidth; sl.classList.add('shake');}});
+  }
+});
+hintBtn.addEventListener('click', function(){
+  if(locked) return;
+  playSfx('hint');
+  var level=levels[currentLevel];
+  var slotEls=slotsEl.querySelectorAll('.slot');
+  for(var i=0;i<slotEls.length;i++){
+    var tile=slotEls[i].querySelector('.word-tile');
+    var w=tile? tile.textContent.trim():'';
+    if(w!==level.words[i]){
+      var target=null, allTiles=document.querySelectorAll('.word-tile');
+      for(var j=0;j<allTiles.length;j++){
+        if(allTiles[j].textContent.trim()===level.words[i]){target=allTiles[j]; if(allTiles[j].parentElement===bankEl) break;}
+      }
+      if(target){placeTile(target, slotEls[i]); updateCheckState();}
+      return;
+    }
+  }
+});
+clearBtn.addEventListener('click', function(){
+  if(locked) return;
+  playSfx('clear');
+  slotsEl.querySelectorAll('.word-tile').forEach(function(t){bankEl.appendChild(t);});
+  updateCheckState();
+});
+function success(){
+  locked=true; checkBtn.disabled=true;
+  var stars=attempts===1?3:(attempts===2?2:1);
+  totalStars+=stars; starTotal.textContent=totalStars;
+  var dot=document.getElementById('dot-'+currentLevel);
+  if(dot) dot.style.background='var(--accent)';
+  var act=levels[currentLevel].action;
+  scene.classList.add('action-'+act);
+  if(MOVING[act]) scene.classList.add('moving');
+  if(RUNFAST[act]) scene.classList.add('runfast');
+  playSfx('correct');
+  playSfx('star'+stars);
+  playActionSound(act);
+  starRow.innerHTML='';
+  for(var i=0;i<3;i++){
+    var sp=document.createElement('span'); sp.className='star'+(i<stars?'':' dim');
+    sp.textContent='★'; starRow.appendChild(sp);
+  }
+  var wait=WAIT[act]||3200;
+  setTimeout(function(){
+    board.style.display='none'; successBanner.style.display='block';
+    nextBtn.textContent=(currentLevel+1<levels.length)?'Next Sentence':'See Results';
+  }, wait);
+}
+nextBtn.addEventListener('click', function(){
+  stopActionSound();
+  if(currentLevel+1<levels.length){ playSfx('next'); loadLevel(currentLevel+1); }
+  else {finalStars.textContent=totalStars; successBanner.style.display='none'; completion.style.display='block'; playSfx('complete');}
+});
+playAgain.addEventListener('click', function(){playSfx('next'); setClass(currentCls);});
+
+setClass('PP');
+})();
+</script>
+</html>
