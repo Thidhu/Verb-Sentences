@@ -1,6 +1,96 @@
 <html style="margin:0;padding:0;">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+/*FONT_FACE_START*/
+@font-face{
+  font-family:'CustomFont';
+  src:url('fonts/DDC_Joyig.ttf') format('truetype');
+  font-weight:100 900;   /* one file is used for every weight, so no fake bold */
+  font-style:normal;
+  font-display:swap;
+}
+/*FONT_FACE_END*/
+:root{
+  /* English / buttons / labels: childish rounded font (Fredoka), with friendly system fallbacks */
+  --font:'Fredoka','Baloo 2','Comic Sans MS','Chalkboard SE',system-ui,sans-serif;
+  /* Dzongkha text ONLY: your custom font */
+  --dz-font:'CustomFont','Noto Sans Tibetan',sans-serif;
+}
+html,body{font-family:var(--font)}
+button,input{font-family:inherit}
+.word-tile,.drag-clone,.slot .word-tile{font-family:var(--dz-font)!important}
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+Tibetan:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.wrap{padding-left:max(16px,env(safe-area-inset-left))!important;padding-right:max(16px,env(safe-area-inset-right))!important;padding-bottom:max(40px,env(safe-area-inset-bottom))!important}
+.btn{min-height:44px}
+.cls-btn,.snd-btn{min-height:38px}
+.word-tile{max-width:100%;overflow-wrap:anywhere}
+#scene svg{height:auto}
+#levelLabel{max-width:100%}
+/* tablets and up */
+@media (min-width:768px){
+  .wrap{max-width:760px!important}
+  .word-tile{font-size:19px}
+}
+/* phones */
+@media (max-width:520px){
+  .wrap{padding-top:16px!important;padding-left:max(10px,env(safe-area-inset-left))!important;padding-right:max(10px,env(safe-area-inset-right))!important}
+  .ttl{font-size:25px!important}
+  .intro{font-size:12.5px!important}
+  #classBar{gap:6px!important}
+  .cls-btn{padding:7px 12px;font-size:12.5px}
+  .hdr{gap:7px!important}
+  #levelLabel{flex:1 1 100%;text-align:center}
+  .snd-btn{flex:1 1 30%;padding:6px 6px;font-size:12px}
+  #scene{border-radius:14px!important;margin-bottom:10px!important}
+  .bank{gap:8px;padding:10px;min-height:56px}
+  .slots{gap:6px}
+  .slot{min-width:46px;min-height:46px;padding:3px 5px}
+  .word-tile{font-size:16px;padding:9px 12px}
+  .slot .word-tile{font-size:15px;padding:5px 9px}
+  .actions{gap:8px!important}
+  .actions .btn{flex:1 1 30%;padding:10px 8px}
+  #checkBtn{flex:1 1 100%!important;order:-1}
+  #successBanner .btn,#completion .btn{width:100%}
+  #hearBtn{width:100%}
+}
+/* very small phones */
+@media (max-width:360px){
+  .ttl{font-size:22px!important}
+  .word-tile{font-size:15px;padding:8px 10px}
+  .slot{min-width:42px}
+}
+/* phones held sideways: keep the scene from eating the screen */
+@media (max-height:480px) and (orientation:landscape){
+  #scene svg{max-height:46vh}
+  .wrap{padding-top:10px!important}
+}
+
+/* ===== SPLASH SCREEN ===== */
+#splash{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:radial-gradient(900px 480px at 50% -10%,rgba(41,122,46,.18),transparent 65%),#faf9f4;
+  font-family:var(--font);text-align:center;padding:24px;
+  transition:opacity .6s ease,visibility .6s ease;cursor:pointer}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+#splash .sp-rabbit{font-size:64px;animation:spHop 1s ease-in-out infinite}
+#splash .sp-by{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#64748b;opacity:0;animation:spFade .8s ease .3s forwards}
+#splash .sp-brand{font-size:44px;font-weight:700;letter-spacing:-.01em;color:#0f172a;opacity:0;animation:spRise .9s ease .6s forwards}
+#splash .sp-brand span{color:#297a2e}
+#splash .sp-bar{width:min(240px,60vw);height:6px;border-radius:99px;background:rgba(15,23,42,.1);overflow:hidden;margin-top:10px}
+#splash .sp-fill{height:100%;width:0;border-radius:99px;background:#297a2e;animation:spLoad 2.6s ease-in-out forwards}
+#splash .sp-hint{font-size:12px;color:#64748b;opacity:0;animation:spFade .6s ease 1.4s forwards}
+@keyframes spHop{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spFade{to{opacity:1}}
+@keyframes spRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spLoad{to{width:100%}}
+@media (max-width:520px){#splash .sp-brand{font-size:34px}}
+</style>
 <script>
 (function(){
 var c=document.createElement('style');
@@ -14,7 +104,7 @@ c.textContent=
 +'.cls-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}'
 +'.snd-btn{padding:5px 12px;border-radius:20px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:inherit}'
 +'.snd-btn.off{color:var(--muted);opacity:.7}'
-+'.word-tile{background:#fff;border:2px solid var(--accent);color:var(--text);border-radius:12px;padding:9px 15px;font-weight:600;font-size:17px;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s;touch-action:none;line-height:1.4;font-family:inherit}'
++'.word-tile{background:#fff;border:2px solid var(--accent);color:var(--text);border-radius:12px;padding:9px 15px;font-weight:600;font-size:17px;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s;touch-action:none;line-height:1.4;font-family:var(--dz-font)}'
 +'.word-tile:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}.word-tile.dragging{opacity:.35}'
 +'.drag-clone{position:fixed;z-index:9999;pointer-events:none;opacity:.92;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;transform:rotate(-2deg) scale(1.05);margin:0}'
 +'.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:60px;align-items:center;padding:13px;background:var(--card);border:1px dashed var(--border);border-radius:14px}'
@@ -171,12 +261,22 @@ c.textContent=
 document.head.appendChild(c);
 })();
 </script>
-<div style="background-color:transparent;box-sizing:border-box;">
-<div style="font-family:'Fredoka','Noto Sans Tibetan',sans-serif;background:radial-gradient(900px 480px at 50% -10%,var(--accent-soft),transparent 65%),var(--bg);color:var(--text);">
-<div style="max-width:640px;margin:0 auto;padding:24px 16px 40px;text-align:center;">
 
-<h1 style="font-size:30px;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin:0;">Rabbit <span style="color:var(--accent);">Sentence</span> Builder</h1>
-<p style="color:var(--muted);font-size:13.5px;margin:7px 0 0;line-height:1.6;">All 213 verbs from the Primary English–Dzongkha bank. Pick a class, build the sentence, watch the rabbit act it out.</p>
+<!-- ===== SPLASH SCREEN: Brought to you by SherigSpace ===== -->
+<div id="splash">
+  <div class="sp-rabbit">🐇</div>
+  <div class="sp-by">Brought to you by</div>
+  <div class="sp-brand">Sherig<span>Space</span></div>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+  <div class="sp-hint">Loading… tap to skip</div>
+</div>
+
+<div style="background-color:transparent;box-sizing:border-box;">
+<div style="font-family:var(--font);background:radial-gradient(900px 480px at 50% -10%,var(--accent-soft),transparent 65%),var(--bg);color:var(--text);">
+<div class="wrap" style="max-width:640px;margin:0 auto;padding:24px 16px 40px;text-align:center;">
+
+<h1 class="ttl" style="font-size:30px;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin:0;">Rabbit <span style="color:var(--accent);">Sentence</span> Builder</h1>
+<p class="intro" style="color:var(--muted);font-size:13.5px;margin:7px 0 0;line-height:1.6;">All 213 verbs from the Primary English–Dzongkha bank. Pick a class, build the sentence, watch the rabbit act it out.</p>
 
 <div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:14px 0 6px;" id="classBar">
 <button class="cls-btn active" data-cls="PP">PP · 28</button>
@@ -188,12 +288,13 @@ document.head.appendChild(c);
 <button class="cls-btn" data-cls="VI">VI · 15</button>
 </div>
 
-<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:10px 0 12px;">
+<div class="hdr" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:10px 0 12px;">
 <span id="levelLabel" style="font-size:13px;font-weight:600;color:var(--muted);">Sentence 1 of 28 · go</span>
 <span style="font-size:13px;color:var(--muted);">Stars: <span id="starTotal" style="font-weight:700;color:#f59e0b;">0</span></span>
 <!-- AUDIO CONTROLS: music on/off and sound effects on/off -->
 <button class="snd-btn" id="musicBtn" type="button" title="Background music">🎵 Music: On</button>
 <button class="snd-btn" id="sfxBtn" type="button" title="Sound effects">🔊 Sounds: On</button>
+<button class="snd-btn" id="voiceBtn" type="button" title="Sentence voice">🗣️ Voice: On</button>
 </div>
 <div id="progress" style="display:flex;gap:5px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;"></div>
 
@@ -294,14 +395,15 @@ document.head.appendChild(c);
 
 <!-- GAME AREA (renamed from id="board" to id="gameBoard" to fix the duplicate-id bug) -->
 <div id="gameBoard">
+<div style="margin-bottom:10px;"><button class="btn btn-secondary" id="hearBtn" type="button">🔈 Hear the sentence</button></div>
 <div class="slots" id="slots"></div>
 <div class="bank" id="bank"></div>
-<div style="display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;">
+<div class="actions" style="display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;">
 <button class="btn btn-primary" id="checkBtn" disabled>Check Sentence</button>
-<button class="btn btn-secondary" id="hintBtn">Hint</button>
+<button class="btn btn-secondary" id="hintBtn">Hint (1)</button>
 <button class="btn btn-secondary" id="clearBtn">Clear</button>
 </div>
-<p style="color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.6;">Drag a word into a slot (works with mouse and touch), or just tap a word to place it. Tap a placed word to send it back.</p>
+<p style="color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.6;">Drag a word into a slot (works with mouse and touch), or just tap a word to place it. Tap a placed word to send it back. You can use the hint only once for each sentence.</p>
 </div>
 
 </div>
@@ -310,7 +412,7 @@ document.head.appendChild(c);
 
 <script>
 (function(){
-var SENTENCES = {"PP":[["རི་བོང་ འགྱོ་ གི །","walk","go"],["རི་བོང་ འོང་ གི །","walk","come"],["རི་བོང་ སྡོད་ གི །","sit","sit"],["རི་བོང་ ལོང་ གི །","stand","stand"],["རི་བོང་ ལམ་འགྱོ་ གི །","walk","walk"],["རི་བོང་ རྒྱུག་ གི །","run","run"],["རི་བོང་ མཆོང་ གི །","jump","jump"],["རི་བོང་ ཉལ་ གི །","sleep","sleep"],["རི་བོང་ ལྷོང་ གི །","wake","wake up"],["རི་བོང་ ཟ་ གི །","eat","eat"],["རི་བོང་ འཐུང་ གི །","drink","drink"],["རི་བོང་ བཞེས་སྒོ་འབད་ གི །","cook","cook food"],["རི་བོང་ རྩེདམོ་རྩེ་ གི །","dance","play"],["རི་བོང་ ལཱ་འབད་ གི །","work","work"],["རི་བོང་ ལྷག་ གི །","read","read"],["རི་བོང་ བྲིས་ གི །","write","write"],["རི་བོང་ སླབ་ གི །","speak","speak"],["རི་བོང་ ཉན་ གི །","listen","listen"],["རི་བོང་ མཐོང་ གི །","look","see"],["རི་བོང་ བལྟ་ གི །","look","look"],["རི་བོང་ གོ་ གི །","listen","hear"],["རི་བོང་ རེག་ གི །","look","touch"],["རི་བོང་ བཟུང་ གི །","catch","hold"],["རི་བོང་ སྤྲོད་ གི །","give","give"],["རི་བོང་ ལེན་ གི །","catch","take"],["རི་བོང་ བཞག་ གི །","push","put"],["རི་བོང་ འབག་ གི །","give","bring"],["རི་བོང་ འབག་ གི །","give","carry"]],"I":[["རི་བོང་ འཁྱུ་ གི །","wash","wash"],["རི་བོང་ གཟུགས་འཁྱུ་ གི །","wash","bathe"],["རི་བོང་ སོ་བཀྲུ་རྐྱབ་ གི །","wash","brush"],["རི་བོང་ ཧིང་སངས་ས་བཟོ་ གི །","wash","clean"],["རི་བོང་ ཁ་ཕྱེ་ གི །","open","open"],["རི་བོང་ ཁ་བསྡམ་ གི །","open","close"],["རི་བོང་ འགོ་བཙུགས་ གི །","work","start"],["རི་བོང་ མཇུག་བསྡུ་ གི །","dance","finish"],["རི་བོང་ བཀག་ གི །","sit","stop"],["རི་བོང་ བསྒུག་ གི །","sit","wait"],["རི་བོང་ ཆ་རོགས་འབད་ གི །","give","help"],["རི་བོང་ དྲིས་ གི །","speak","ask"],["རི་བོང་ ལན་སླབ་ གི །","speak","answer"],["རི་བོང་ འབོ་ གི །","speak","call"],["རི་བོང་ འཕྱད་ གི །","walk","meet"],["རི་བོང་ བལྟ་སྐོར་འབད་ གི །","walk","visit"],["རི་བོང་ སྡོད་ གི །","sit","live"],["རི་བོང་ སྡོད་ གི །","sit","stay"],["རི་བོང་ བཞག་ གི །","walk","leave"],["རི་བོང་ ལོག་འོང་ གི །","walk","return"],["རི་བོང་ ཉོ་ གི །","give","buy"],["རི་བོང་ བཙོང་ གི །","give","sell"],["རི་བོང་ སྤྲོད་ གི །","give","pay"],["རི་བོང་ ལག་ལེན་འཐབ་ གི །","work","use"],["རི་བོང་ བཟོ་ གི །","work","make"],["རི་བོང་ འབད་ གི །","work","do"],["རི་བོང་ དཔའ་བཅམ་ནི་ གི །","think","try"],["རི་བོང་ དགོ གི །","think","need"],["རི་བོང་ དགོ་ གི །","think","want"],["རི་བོང་ དགའ་ གི །","dance","like"]],"II":[["རི་བོང་ འཛེག་ གི །","climb","climb"],["རི་བོང་ གོབ་འགྱོ་ནི གི །","climb","crawl"],["རི་བོང་ རྩལ་རྐྱབ་ནི གི །","swim","swim"],["རི་བོང་ འཕུར་ གི །","fly","fly"],["རི་བོང་ ཞབས་ཁྲ་རྐྱབ་ གི །","dance","dance"],["རི་བོང་ བསྒྱིར་ གི །","dance","turn"],["རི་བོང་ སྤར་ གི །","walk","move"],["རི་བོང་ བུད་ གི །","fall","fall"],["རི་བོང་ ལོང་ གི །","stand","rise"],["རི་བོང་ འཛུལ་ གི །","walk","enter"],["རི་བོང་ ཕྱི་ཁར་འཐོན་ གི །","walk","exit"],["རི་བོང་ བརྒལ་ གི །","walk","cross"],["རི་བོང་ རྗེས་སུ་འབྲང་ གི །","walk","follow"],["རི་བོང་ འགོ་ཁྲིད་འབད་ གི །","walk","lead"],["རི་བོང་ འགྲོ་འགྲུལ་འབད་ གི །","walk","travel"],["རི་བོང་ བཞོན་ གི །","walk","ride"],["རི་བོང་ སྣུམ་འཁོར་གཏང་ནི་ གི །","walk","drive"],["རི་བོང་ ལྷབ་ གི །","read","learn"],["རི་བོང་ སློབ་སྟོན་འབད་ནི་ གི །","teach","teach"],["རི་བོང་ ལྷབ་སྦྱོང་འབད་ནི་ གི །","read","study"],["རི་བོང་ པར་བྲི་ནི་ གི །","draw","draw"],["རི་བོང་ ཚོན་གཏང་ནི་ གི །","draw","colour"],["རི་བོང་ གྱངས་ཁ་རྐྱབ་ གི །","read","count"],["རི་བོང་ སྦྱོར་ཀློག་རྐྱབ་ གི །","read","spell"],["རི་བོང་ འདྲ་བཤུས་རྐྱབ་ གི །","write","copy"],["རི་བོང་ སྦྱང་བ་འབད་ གི །","work","practise"],["རི་བོང་ དྲན་ གི །","think","remember"],["རི་བོང་ བརྗེད་ གི །","think","forget"],["རི་བོང་ ཧ་གོ་ གི །","think","understand"],["རི་བོང་ བཤད་པ་རྐྱབ་ གི །","teach","explain"]],"III":[["རི་བོང་ སྟོན་ གི །","teach","show"],["རི་བོང་ སླབ་ གི །","speak","tell"],["རི་བོང་ ལོག་སྟེ་སླབ་ གི །","speak","repeat"],["རི་བོང་ མཐུན་སྒྲིག་འབད་ གི །","teach","match"],["རི་བོང་ པད་སྐོར་བསྒྱིར་ནི་ གི །","draw","circle"],["རི་བོང་ སླབ་ གི །","speak","say"],["རི་བོང་ གྲོས་བསྡུར་འབད་ གི །","speak","discuss"],["རི་བོང་ འགྲེལ་བཤད་འབད་ གི །","speak","describe"],["རི་བོང་ སྐད་རྐྱབ་ གི །","sing","shout"],["རི་བོང་ གསངས་ས་སླབ་ནི་ གི །","speak","whisper"],["རི་བོང་ མགྱོནམ་འབོ་ནི་ གི །","speak","invite"],["རི་བོང་ ཁ་བཟང་འབད་ནི་ གི །","wave","greet"],["རི་བོང་ བཀའ་དྲིན་བསམ་ནི་ གི །","wave","thank"],["རི་བོང་ ཁས་ལེན་འབད་ གི །","speak","promise"],["རི་བོང་ ཁ་འཆམ་ གི །","dance","agree"],["རི་བོང་ མ་འཆམ་ གི །","cry","disagree"],["རི་བོང་ ཉེན་བརྡ་འབད་ གི །","speak","warn"],["རི་བོང་ བསླབ་བྱ་བྱིན་ གི །","speak","advise"],["རི་བོང་ བསམ་འཆར་བཤད་ གི །","speak","suggest"],["རི་བོང་ མནོ་བསམ་གཏང་ གི །","think","think"],["རི་བོང་ ཤེས་ གི །","think","know"],["རི་བོང་ ཡིད་ཆེས་བསྐྱེད་ གི །","think","believe"],["རི་བོང་ ཐག་བཅད་ གི །","think","decide"],["རི་བོང་ གདམ་ཁ་རྐྱབ་ གི །","think","choose"],["རི་བོང་ བསྡུར་བསྡོམས་འབད་ གི །","think","compare"],["རི་བོང་ བསམ་བློ་གཏང་ གི །","think","imagine"],["རི་བོང་ ཚོད་དཔག་འབད་ གི །","think","guess"],["རི་བོང་ ངོ་ཤེས་ གི །","think","recognize"],["རི་བོང་ ཚོལ་འཐོབ་ནི་ གི །","think","discover"],["རི་བོང་ དཀའ་ངལ་སེལ་ གི །","think","solve"]],"IV":[["རི་བོང་ འཆར་གཞི་བཟོ་ གི །","think","plan"],["རི་བོང་ བརྟག་དཔྱད་འབད་ གི །","think","examine"],["རི་བོང་ ཞིབ་འཚོལ་འབད་ གི །","think","investigate"],["རི་བོང་ དཔྱད་ཞིབ་འབད་ གི །","think","analyze"],["རི་བོང་ བྱམས་པ་བྱིན་ནི་ གི །","dance","love"],["རི་བོང་ མ་དགའཝ་བསྐྱེད་ གི །","cry","hate"],["རི་བོང་ སྤྲོ་བ་འཐོན་ གི །","dance","enjoy"],["རི་བོང་ འདྲོགས་ གི །","cry","fear"],["རི་བོང་ ཚ་གྱང་ལང་ནི་ གི །","cry","worry"],["རི་བོང་ རེ་བ་བསྐྱེད་ གི །","dance","hope"],["རི་བོང་ རེ་བ་བསྐྱེད་ གི །","dance","wish"],["རི་བོང་ དགའ་འཛུམ་སྟོན་ནི་ གི །","dance","smile"],["རི་བོང་ བགའ་ གི །","dance","laugh"],["རི་བོང་ སྔུ་ གི །","cry","cry"],["རི་བོང་ སེམས་ཁར་ཕོག་ གི །","cry","hurt"],["རི་བོང་ དྲན་ གི །","cry","miss"],["རི་བོང་ ཡིད་ཆེས་བསྐྱེད་ གི །","dance","trust"],["རི་བོང་ བརྩེ་བ་བསྐྱེད་ གི །","dance","care"],["རི་བོང་ གུས་ཞབས་འབད་ གི །","dance","respect"],["རི་བོང་ དགོངས་ཡངས་གནང་ གི །","dance","forgive"],["རི་བོང་ བཟུང་ གི །","catch","hold"],["རི་བོང་ བཟུང་ གི །","catch","catch"],["རི་བོང་ གཡུག་བཀོ་ནི་ གི །","catch","throw"],["རི་བོང་ རྡོག་ཐེ་རྐྱབ་ནི་ གི །","catch","kick"],["རི་བོང་ འཕུལ་ནི་ གི །","push","push"],["རི་བོང་ འཐེན་ གི །","push","pull"],["རི་བོང་ གཏུབ་ གི །","draw","cut"],["རི་བོང་ བཅག་ གི །","fall","break"],["རི་བོང་ ཉམས་བཅོས་འབད་ གི །","work","fix"],["རི་བོང་ བཟོ་ གི །","work","build"],["རི་བོང་ ཚོན་གཏང་ནི་ གི །","draw","paint"],["རི་བོང་ བལྟབ་ནི་ གི །","draw","fold"],["རི་བོང་ སྤེད་ནི་ གི །","draw","tear"],["རི་བོང་ བསྡམ་ གི །","draw","tie"],["རི་བོང་ བཀང་ གི །","water","fill"],["རི་བོང་ སྟོངམ་བཏོན་ནི་ གི །","water","empty"],["རི་བོང་ བཀབ་ གི །","water","cover"],["རི་བོང་ སྦོམ་ནི་ གི །","bloom","grow"],["རི་བོང་ མེ་ཏོག་ཤར་ གི །","bloom","bloom"],["རི་བོང་ འཐོན་ནི་ གི །","bloom","flow"]],"V":[["རི་བོང་ ཆརཔ་རྐྱབ་ གི །","rain","rain"],["རི་བོང་ ཁཝ་རྐྱབ་ གི །","rain","snow"],["རི་བོང་ འོད་འཐོན་ནི་ གི །","rain","shine"],["རི་བོང་ རླུང་འཕུར་ གི །","rain","blow"],["རི་བོང་ འབར་ གི །","rain","burn"],["རི་བོང་ ཤི་ གི །","sleep","die"],["རི་བོང་ སྒོང་རྡོག་བརྟོལ་ཏེ་སྐྱེས་ གི །","bloom","hatch"],["རི་བོང་ སྒོང་རྡོག་བུད་ གི །","bloom","lay eggs"],["རི་བོང་ འཚོལ་ནི་ གི །","eat","hunt"],["རི་བོང་ སོ་བཏབ་ གི །","eat","bite"],["རི་བོང་ ཧབ་ གི །","sing","bark"],["རི་བོང་ རྩྭ་ཟ་བཅུག་ནི་ གི །","eat","graze"],["རི་བོང་ བགོ་བཤའ་རྐྱབ་ གི །","give","share"],["རི་བོང་ ལེན་ནི་ གི །","catch","receive"],["རི་བོང་ ཁ་ལུ་ཉན་ནི་ གི །","sit","obey"],["རི་བོང་ སྲུང་སྐྱོབ་འབད་ གི །","dance","protect"],["རི་བོང་ བསྲུང་ནི་ གི །","dance","save"],["རི་བོང་ རྒྱབ་སྐྱོར་འབད་ནི་ གི །","dance","support"],["རི་བོང་ མཉམ་འབྲེལ་འབད་ནི་ གི །","dance","cooperate"],["རི་བོང་ བཅའ་མར་གཏོགས་ནི་ གི །","dance","participate"],["རི་བོང་ ཁས་བླངས་འབད་ནི་ གི །","dance","volunteer"],["རི་བོང་ ཞབས་ཏོག་ཞུ་ གི །","give","serve"],["རི་བོང་ བཟོད་གསོལ་ཞུ་ནི་ གི །","wave","apologize"],["རི་བོང་ གཅིག་ཁར་བསྡོམ་ནི་ གི །","dance","unite"],["རི་བོང་ གསརཔ་བཟོ་ནི་ གི །","work","create"],["རི་བོང་ བཟོ་བཀོད་འབད་ནི་ གི །","work","design"],["རི་བོང་ ཡར་རྒྱས་གཏང་ གི །","work","develop"],["རི་བོང་ ལེགས་བཅོས་འབད་ གི །","work","improve"],["རི་བོང་ གྲ་སྒྲིག་འབད་ གི །","work","prepare"],["རི་བོང་ འགོ་འདྲེན་འཐབ་ གི །","work","organize"],["རི་བོང་ བསྡུ་ གི །","work","collect"],["རི་བོང་ བསྒྲིག་ གི །","work","arrange"],["རི་བོང་ ཚད་འཇལ་ གི །","think","measure"],["རི་བོང་ རྩིས་རྐྱབ་ གི །","think","calculate"],["རི་བོང་ ངོས་འཛིན་འབད་ གི །","think","identify"],["རི་བོང་ དབྱེ་ཁག་བཟོ་ གི །","think","classify"],["རི་བོང་ གདམ་ཁ་རྐྱབ་ གི །","think","select"],["རི་བོང་ དཔྱད་ཞིབ་འབད་ གི །","think","evaluate"],["རི་བོང་ ཞིབ་འཚོལ་འབད་ནི་ གི །","think","research"],["རི་བོང་ ཞིབ་རྟོག་འབད་ནི་ གི །","think","observe"]],"VI":[["རི་བོང་ སྔོན་དཔག་འབད་ནི་ གི །","think","predict"],["རི་བོང་ མཇུག་བསྡུ་ནི་ གི །","think","conclude"],["རི་བོང་ ཨེབ་ གི །","write","click"],["རི་བོང་ མཛུབ་གནོན་རྐྱབ་ གི །","write","type"],["རི་བོང་ བཏོན་གཏང་ནི་ གི །","write","delete"],["རི་བོང་ སྲོག་འཇོག་འབད་ གི །","dance","save"],["རི་བོང་ ཕབ་ལེན་འབད་ གི །","write","download"],["རི་བོང་ ཡོངས་འབྲེལ་ནང་བཙུགས་ གི །","write","upload"],["རི་བོང་ འཚོལ་ གི །","look","search"],["རི་བོང་ དཔར་བསྐྲུན་འབད་ གི །","write","print"],["རི་བོང་ སྦྱར་ གི །","write","paste"],["རི་བོང་ ཞུན་དག་འབད་ གི །","write","edit"],["རི་བོང་ གཏང་ གི །","give","send"],["རི་བོང་ མཐུད་ གི །","give","connect"],["རི་བོང་ མཐུད་བཅད་ གི །","give","disconnect"]]};
+var SENTENCES = {"PP":[["རི་བོང་ ལམ་ འགྱོ་ དེས །","walk","go"],["རི་བོང་ འོང་ དོ །","walk","come"],["རི་བོང་ ས་ ཁར་ སྡོད་ནུག །","sit","sit"],["རི་བོང་ ཡར་ ལོང་ དེས །","stand","stand"],["རི་བོང་ ལམ་ འགྱོ །","walk","walk"],["ཁོ་ རྒྱུག་ དེས་ །","run","run"],["རི་བོང་ མཆོང་ དེས །","jump","jump"],["རི་བོང་ ཉལ་ གི །","sleep","sleep"],["རི་བོང་ ལྷོང་ གི །","wake","wake up"],["རི་བོང་ ཟ་ གི །","eat","eat"],["རི་བོང་ འཐུང་ གི །","drink","drink"],["རི་བོང་ བཞེས་སྒོ་འབད་ གི །","cook","cook food"],["རི་བོང་ རྩེདམོ་རྩེ་ གི །","dance","play"],["རི་བོང་ ལཱ་འབད་ གི །","work","work"],["རི་བོང་ ལྷག་ གི །","read","read"],["རི་བོང་ བྲིས་ གི །","write","write"],["རི་བོང་ སླབ་ གི །","speak","speak"],["རི་བོང་ ཉན་ གི །","listen","listen"],["རི་བོང་ མཐོང་ གི །","look","see"],["རི་བོང་ བལྟ་ གི །","look","look"],["རི་བོང་ གོ་ གི །","listen","hear"],["རི་བོང་ རེག་ གི །","look","touch"],["རི་བོང་ བཟུང་ གི །","catch","hold"],["རི་བོང་ སྤྲོད་ གི །","give","give"],["རི་བོང་ ལེན་ གི །","catch","take"],["རི་བོང་ བཞག་ གི །","push","put"],["རི་བོང་ འབག་ གི །","give","bring"],["རི་བོང་ འབག་ གི །","give","carry"]],"I":[["རི་བོང་ འཁྱུ་ གི །","wash","wash"],["རི་བོང་ གཟུགས་འཁྱུ་ གི །","wash","bathe"],["རི་བོང་ སོ་བཀྲུ་རྐྱབ་ གི །","wash","brush"],["རི་བོང་ ཧིང་སངས་ས་བཟོ་ གི །","wash","clean"],["རི་བོང་ ཁ་ཕྱེ་ གི །","open","open"],["རི་བོང་ ཁ་བསྡམ་ གི །","open","close"],["རི་བོང་ འགོ་བཙུགས་ གི །","work","start"],["རི་བོང་ མཇུག་བསྡུ་ གི །","dance","finish"],["རི་བོང་ བཀག་ གི །","sit","stop"],["རི་བོང་ བསྒུག་ གི །","sit","wait"],["རི་བོང་ ཆ་རོགས་འབད་ གི །","give","help"],["རི་བོང་ དྲིས་ གི །","speak","ask"],["རི་བོང་ ལན་སླབ་ གི །","speak","answer"],["རི་བོང་ འབོ་ གི །","speak","call"],["རི་བོང་ འཕྱད་ གི །","walk","meet"],["རི་བོང་ བལྟ་སྐོར་འབད་ གི །","walk","visit"],["རི་བོང་ སྡོད་ གི །","sit","live"],["རི་བོང་ སྡོད་ གི །","sit","stay"],["རི་བོང་ བཞག་ གི །","walk","leave"],["རི་བོང་ ལོག་འོང་ གི །","walk","return"],["རི་བོང་ ཉོ་ གི །","give","buy"],["རི་བོང་ བཙོང་ གི །","give","sell"],["རི་བོང་ སྤྲོད་ གི །","give","pay"],["རི་བོང་ ལག་ལེན་འཐབ་ གི །","work","use"],["རི་བོང་ བཟོ་ གི །","work","make"],["རི་བོང་ འབད་ གི །","work","do"],["རི་བོང་ དཔའ་བཅམ་ནི་ གི །","think","try"],["རི་བོང་ དགོ གི །","think","need"],["རི་བོང་ དགོ་ གི །","think","want"],["རི་བོང་ དགའ་ གི །","dance","like"]],"II":[["རི་བོང་ འཛེག་ གི །","climb","climb"],["རི་བོང་ གོབ་འགྱོ་ནི གི །","climb","crawl"],["རི་བོང་ རྩལ་རྐྱབ་ནི གི །","swim","swim"],["རི་བོང་ འཕུར་ གི །","fly","fly"],["རི་བོང་ ཞབས་ཁྲ་རྐྱབ་ གི །","dance","dance"],["རི་བོང་ བསྒྱིར་ གི །","dance","turn"],["རི་བོང་ སྤར་ གི །","walk","move"],["རི་བོང་ བུད་ གི །","fall","fall"],["རི་བོང་ ལོང་ གི །","stand","rise"],["རི་བོང་ འཛུལ་ གི །","walk","enter"],["རི་བོང་ ཕྱི་ཁར་འཐོན་ གི །","walk","exit"],["རི་བོང་ བརྒལ་ གི །","walk","cross"],["རི་བོང་ རྗེས་སུ་འབྲང་ གི །","walk","follow"],["རི་བོང་ འགོ་ཁྲིད་འབད་ གི །","walk","lead"],["རི་བོང་ འགྲོ་འགྲུལ་འབད་ གི །","walk","travel"],["རི་བོང་ བཞོན་ གི །","walk","ride"],["རི་བོང་ སྣུམ་འཁོར་གཏང་ནི་ གི །","walk","drive"],["རི་བོང་ ལྷབ་ གི །","read","learn"],["རི་བོང་ སློབ་སྟོན་འབད་ནི་ གི །","teach","teach"],["རི་བོང་ ལྷབ་སྦྱོང་འབད་ནི་ གི །","read","study"],["རི་བོང་ པར་བྲི་ནི་ གི །","draw","draw"],["རི་བོང་ ཚོན་གཏང་ནི་ གི །","draw","colour"],["རི་བོང་ གྱངས་ཁ་རྐྱབ་ གི །","read","count"],["རི་བོང་ སྦྱོར་ཀློག་རྐྱབ་ གི །","read","spell"],["རི་བོང་ འདྲ་བཤུས་རྐྱབ་ གི །","write","copy"],["རི་བོང་ སྦྱང་བ་འབད་ གི །","work","practise"],["རི་བོང་ དྲན་ གི །","think","remember"],["རི་བོང་ བརྗེད་ གི །","think","forget"],["རི་བོང་ ཧ་གོ་ གི །","think","understand"],["རི་བོང་ བཤད་པ་རྐྱབ་ གི །","teach","explain"]],"III":[["རི་བོང་ སྟོན་ གི །","teach","show"],["རི་བོང་ སླབ་ གི །","speak","tell"],["རི་བོང་ ལོག་སྟེ་སླབ་ གི །","speak","repeat"],["རི་བོང་ མཐུན་སྒྲིག་འབད་ གི །","teach","match"],["རི་བོང་ པད་སྐོར་བསྒྱིར་ནི་ གི །","draw","circle"],["རི་བོང་ སླབ་ གི །","speak","say"],["རི་བོང་ གྲོས་བསྡུར་འབད་ གི །","speak","discuss"],["རི་བོང་ འགྲེལ་བཤད་འབད་ གི །","speak","describe"],["རི་བོང་ སྐད་རྐྱབ་ གི །","sing","shout"],["རི་བོང་ གསངས་ས་སླབ་ནི་ གི །","speak","whisper"],["རི་བོང་ མགྱོནམ་འབོ་ནི་ གི །","speak","invite"],["རི་བོང་ ཁ་བཟང་འབད་ནི་ གི །","wave","greet"],["རི་བོང་ བཀའ་དྲིན་བསམ་ནི་ གི །","wave","thank"],["རི་བོང་ ཁས་ལེན་འབད་ གི །","speak","promise"],["རི་བོང་ ཁ་འཆམ་ གི །","dance","agree"],["རི་བོང་ མ་འཆམ་ གི །","cry","disagree"],["རི་བོང་ ཉེན་བརྡ་འབད་ གི །","speak","warn"],["རི་བོང་ བསླབ་བྱ་བྱིན་ གི །","speak","advise"],["རི་བོང་ བསམ་འཆར་བཤད་ གི །","speak","suggest"],["རི་བོང་ མནོ་བསམ་གཏང་ གི །","think","think"],["རི་བོང་ ཤེས་ གི །","think","know"],["རི་བོང་ ཡིད་ཆེས་བསྐྱེད་ གི །","think","believe"],["རི་བོང་ ཐག་བཅད་ གི །","think","decide"],["རི་བོང་ གདམ་ཁ་རྐྱབ་ གི །","think","choose"],["རི་བོང་ བསྡུར་བསྡོམས་འབད་ གི །","think","compare"],["རི་བོང་ བསམ་བློ་གཏང་ གི །","think","imagine"],["རི་བོང་ ཚོད་དཔག་འབད་ གི །","think","guess"],["རི་བོང་ ངོ་ཤེས་ གི །","think","recognize"],["རི་བོང་ ཚོལ་འཐོབ་ནི་ གི །","think","discover"],["རི་བོང་ དཀའ་ངལ་སེལ་ གི །","think","solve"]],"IV":[["རི་བོང་ འཆར་གཞི་བཟོ་ གི །","think","plan"],["རི་བོང་ བརྟག་དཔྱད་འབད་ གི །","think","examine"],["རི་བོང་ ཞིབ་འཚོལ་འབད་ གི །","think","investigate"],["རི་བོང་ དཔྱད་ཞིབ་འབད་ གི །","think","analyze"],["རི་བོང་ བྱམས་པ་བྱིན་ནི་ གི །","dance","love"],["རི་བོང་ མ་དགའཝ་བསྐྱེད་ གི །","cry","hate"],["རི་བོང་ སྤྲོ་བ་འཐོན་ གི །","dance","enjoy"],["རི་བོང་ འདྲོགས་ གི །","cry","fear"],["རི་བོང་ ཚ་གྱང་ལང་ནི་ གི །","cry","worry"],["རི་བོང་ རེ་བ་བསྐྱེད་ གི །","dance","hope"],["རི་བོང་ རེ་བ་བསྐྱེད་ གི །","dance","wish"],["རི་བོང་ དགའ་འཛུམ་སྟོན་ནི་ གི །","dance","smile"],["རི་བོང་ བགའ་ གི །","dance","laugh"],["རི་བོང་ སྔུ་ གི །","cry","cry"],["རི་བོང་ སེམས་ཁར་ཕོག་ གི །","cry","hurt"],["རི་བོང་ དྲན་ གི །","cry","miss"],["རི་བོང་ ཡིད་ཆེས་བསྐྱེད་ གི །","dance","trust"],["རི་བོང་ བརྩེ་བ་བསྐྱེད་ གི །","dance","care"],["རི་བོང་ གུས་ཞབས་འབད་ གི །","dance","respect"],["རི་བོང་ དགོངས་ཡངས་གནང་ གི །","dance","forgive"],["རི་བོང་ བཟུང་ གི །","catch","hold"],["རི་བོང་ བཟུང་ གི །","catch","catch"],["རི་བོང་ གཡུག་བཀོ་ནི་ གི །","catch","throw"],["རི་བོང་ རྡོག་ཐེ་རྐྱབ་ནི་ གི །","catch","kick"],["རི་བོང་ འཕུལ་ནི་ གི །","push","push"],["རི་བོང་ འཐེན་ གི །","push","pull"],["རི་བོང་ གཏུབ་ གི །","draw","cut"],["རི་བོང་ བཅག་ གི །","fall","break"],["རི་བོང་ ཉམས་བཅོས་འབད་ གི །","work","fix"],["རི་བོང་ བཟོ་ གི །","work","build"],["རི་བོང་ ཚོན་གཏང་ནི་ གི །","draw","paint"],["རི་བོང་ བལྟབ་ནི་ གི །","draw","fold"],["རི་བོང་ སྤེད་ནི་ གི །","draw","tear"],["རི་བོང་ བསྡམ་ གི །","draw","tie"],["རི་བོང་ བཀང་ གི །","water","fill"],["རི་བོང་ སྟོངམ་བཏོན་ནི་ གི །","water","empty"],["རི་བོང་ བཀབ་ གི །","water","cover"],["རི་བོང་ སྦོམ་ནི་ གི །","bloom","grow"],["རི་བོང་ མེ་ཏོག་ཤར་ གི །","bloom","bloom"],["རི་བོང་ འཐོན་ནི་ གི །","bloom","flow"]],"V":[["རི་བོང་ ཆརཔ་རྐྱབ་ གི །","rain","rain"],["རི་བོང་ ཁཝ་རྐྱབ་ གི །","rain","snow"],["རི་བོང་ འོད་འཐོན་ནི་ གི །","rain","shine"],["རི་བོང་ རླུང་འཕུར་ གི །","rain","blow"],["རི་བོང་ འབར་ གི །","rain","burn"],["རི་བོང་ ཤི་ གི །","sleep","die"],["རི་བོང་ སྒོང་རྡོག་བརྟོལ་ཏེ་སྐྱེས་ གི །","bloom","hatch"],["རི་བོང་ སྒོང་རྡོག་བུད་ གི །","bloom","lay eggs"],["རི་བོང་ འཚོལ་ནི་ གི །","eat","hunt"],["རི་བོང་ སོ་བཏབ་ གི །","eat","bite"],["རི་བོང་ ཧབ་ གི །","sing","bark"],["རི་བོང་ རྩྭ་ཟ་བཅུག་ནི་ གི །","eat","graze"],["རི་བོང་ བགོ་བཤའ་རྐྱབ་ གི །","give","share"],["རི་བོང་ ལེན་ནི་ གི །","catch","receive"],["རི་བོང་ ཁ་ལུ་ཉན་ནི་ གི །","sit","obey"],["རི་བོང་ སྲུང་སྐྱོབ་འབད་ གི །","dance","protect"],["རི་བོང་ བསྲུང་ནི་ གི །","dance","save"],["རི་བོང་ རྒྱབ་སྐྱོར་འབད་ནི་ གི །","dance","support"],["རི་བོང་ མཉམ་འབྲེལ་འབད་ནི་ གི །","dance","cooperate"],["རི་བོང་ བཅའ་མར་གཏོགས་ནི་ གི །","dance","participate"],["རི་བོང་ ཁས་བླངས་འབད་ནི་ གི །","dance","volunteer"],["རི་བོང་ ཞབས་ཏོག་ཞུ་ གི །","give","serve"],["རི་བོང་ བཟོད་གསོལ་ཞུ་ནི་ གི །","wave","apologize"],["རི་བོང་ གཅིག་ཁར་བསྡོམ་ནི་ གི །","dance","unite"],["རི་བོང་ གསརཔ་བཟོ་ནི་ གི །","work","create"],["རི་བོང་ བཟོ་བཀོད་འབད་ནི་ གི །","work","design"],["རི་བོང་ ཡར་རྒྱས་གཏང་ གི །","work","develop"],["རི་བོང་ ལེགས་བཅོས་འབད་ གི །","work","improve"],["རི་བོང་ གྲ་སྒྲིག་འབད་ གི །","work","prepare"],["རི་བོང་ འགོ་འདྲེན་འཐབ་ གི །","work","organize"],["རི་བོང་ བསྡུ་ གི །","work","collect"],["རི་བོང་ བསྒྲིག་ གི །","work","arrange"],["རི་བོང་ ཚད་འཇལ་ གི །","think","measure"],["རི་བོང་ རྩིས་རྐྱབ་ གི །","think","calculate"],["རི་བོང་ ངོས་འཛིན་འབད་ གི །","think","identify"],["རི་བོང་ དབྱེ་ཁག་བཟོ་ གི །","think","classify"],["རི་བོང་ གདམ་ཁ་རྐྱབ་ གི །","think","select"],["རི་བོང་ དཔྱད་ཞིབ་འབད་ གི །","think","evaluate"],["རི་བོང་ ཞིབ་འཚོལ་འབད་ནི་ གི །","think","research"],["རི་བོང་ ཞིབ་རྟོག་འབད་ནི་ གི །","think","observe"]],"VI":[["རི་བོང་ སྔོན་དཔག་འབད་ནི་ གི །","think","predict"],["རི་བོང་ མཇུག་བསྡུ་ནི་ གི །","think","conclude"],["རི་བོང་ ཨེབ་ གི །","write","click"],["རི་བོང་ མཛུབ་གནོན་རྐྱབ་ གི །","write","type"],["རི་བོང་ བཏོན་གཏང་ནི་ གི །","write","delete"],["རི་བོང་ སྲོག་འཇོག་འབད་ གི །","dance","save"],["རི་བོང་ ཕབ་ལེན་འབད་ གི །","write","download"],["རི་བོང་ ཡོངས་འབྲེལ་ནང་བཙུགས་ གི །","write","upload"],["རི་བོང་ འཚོལ་ གི །","look","search"],["རི་བོང་ དཔར་བསྐྲུན་འབད་ གི །","write","print"],["རི་བོང་ སྦྱར་ གི །","write","paste"],["རི་བོང་ ཞུན་དག་འབད་ གི །","write","edit"],["རི་བོང་ གཏང་ གི །","give","send"],["རི་བོང་ མཐུད་ གི །","give","connect"],["རི་བོང་ མཐུད་བཅད་ གི །","give","disconnect"]]};
 
 var MOVING = {walk:1,run:1,jump:1,climb:1,swim:1,fall:1,sit:1,stand:1,wake:1,eat:1,drink:1,cook:1,sleep:1,water:1,wave:1,give:1,catch:1,push:1,wash:1,open:1,bloom:1,rain:1,dance:1};
 var RUNFAST = {run:1};
@@ -322,33 +424,85 @@ var WAIT = {walk:3400,run:2600,jump:2800,climb:3400,swim:3400,fly:3200,fall:3200
    and nothing breaks. Example:  background: 'audio/background.mp3'
    ================================================================ */
 var AUDIO_FILES = {
-  background : '',   // looping background music (plays after the first tap/click)
-  pick       : '',   // when a word is picked up / tapped
-  drop       : '',   // when a word is placed in a slot
-  remove     : '',   // when a word goes back to the bank
-  correct    : '',   // sentence is correct
-  wrong      : '',   // sentence is wrong
-  hint       : '',   // Hint button
-  clear      : '',   // Clear button
-  next       : '',   // Next Sentence button
-  classChange: '',   // switching class (PP, I, II ...)
-  complete   : '',   // class set finished
-  star3      : '',   // optional: extra cheer for 3 stars
-  star2      : '',   // optional: for 2 stars
-  star1      : ''    // optional: for 1 star
+  background : 'audio/background.mp3',   // looping background music (plays after the first tap/click)
+  pick       : 'audio/pick.mp3',   // one short sound the moment a word starts being dragged
+  dragLoop   : 'audio/dragLoop.mp3',   // sound that LOOPS while a word is being dragged (stops when released)
+  drop       : 'audio/drop.mp3',   // when a word is placed in a slot
+  remove     : 'audio/remove.mp3',   // when a word goes back to the bank
+  correct    : 'audio/correct.mp3',   // sentence is correct
+  wrong      : 'audio/wrong.mp3',   // sentence is wrong
+  hint       : 'audio/hint.mp3',   // Hint button
+  clear      : 'audio/clear.mp3',   // Clear button
+  next       : 'audio/next.mp3',   // Next Sentence button
+  classChange: 'audio/classChange.mp3',   // switching class (PP, I, II ...)
+  complete   : 'audio/complete.mp3',   // class set finished
+  star3      : 'audio/star3.mp3',   // plays together with the stars appearing (3 stars)
+  star2      : 'audio/star2.mp3',   // 2 stars
+  star1      : 'audio/star1.mp3'    // 1 star
 };
 
 /* Optional: a sound for each rabbit action (played when the sentence is correct).
    Fill only the ones you want. */
 var ACTION_SOUNDS = {
-  walk:'', run:'', jump:'', climb:'', swim:'', fly:'', fall:'', sit:'', stand:'', wake:'',
-  dance:'', eat:'', drink:'', cook:'', sleep:'', read:'', write:'', draw:'', think:'', work:'',
-  speak:'', sing:'', teach:'', listen:'', look:'', cry:'', wash:'', open:'', water:'', wave:'',
-  give:'', catch:'', push:'', bloom:'', rain:''
+  walk:'audio/actions/walk.mp3', run:'audio/actions/run.mp3', jump:'audio/actions/jump.mp3', climb:'audio/actions/climb.mp3', swim:'audio/actions/swim.mp3', fly:'audio/actions/fly.mp3', fall:'audio/actions/fall.mp3', sit:'audio/actions/sit.mp3', stand:'audio/actions/stand.mp3', wake:'audio/actions/wake.mp3',
+  dance:'audio/actions/dance.mp3', eat:'audio/actions/eat.mp3', drink:'audio/actions/drink.mp3', cook:'audio/actions/cook.mp3', sleep:'audio/actions/sleep.mp3', read:'audio/actions/read.mp3', write:'audio/actions/write.mp3', draw:'audio/actions/draw.mp3', think:'audio/actions/think.mp3', work:'audio/actions/work.mp3',
+  speak:'audio/actions/speak.mp3', sing:'audio/actions/sing.mp3', teach:'audio/actions/teach.mp3', listen:'audio/actions/listen.mp3', look:'audio/actions/look.mp3', cry:'audio/actions/cry.mp3', wash:'audio/actions/wash.mp3', open:'audio/actions/open.mp3', water:'audio/actions/water.mp3', wave:'audio/actions/wave.mp3',
+  give:'audio/actions/give.mp3', catch:'audio/actions/catch.mp3', push:'audio/actions/push.mp3', bloom:'audio/actions/bloom.mp3', rain:'audio/actions/rain.mp3'
 };
 
 /* Volume levels, 0 to 1 */
-var VOLUME = { background: 0.35, sfx: 0.8 };
+var VOLUME = { background: 0.35, sfx: 0.8, voice: 1 };
+
+/* ================================================================
+   SENTENCE VOICE (recorded sentences, one file per sentence)
+   Put all recordings in one folder. File names are:  CLASS-NN.mp3
+     PP-01.mp3 ... PP-28.mp3      I-01.mp3 ... I-30.mp3
+     II-01.mp3 ... II-30.mp3      III-01.mp3 ... III-30.mp3
+     IV-01.mp3 ... IV-40.mp3      V-01.mp3 ... V-40.mp3
+     VI-01.mp3 ... VI-15.mp3
+   NN is the sentence number shown on screen ("Sentence 5 of 28" = PP-05).
+   Set enabled:false to switch the voice off completely.
+   ================================================================ */
+var SENTENCE_AUDIO = {
+  enabled       : true,
+  folder        : 'audio/sentences/',
+  extension     : '.mp3',
+  playOnLoad    : true,    // plays automatically when a new sentence appears
+  playOnCorrect : true,    // plays again when the child gets it right
+  correctDelay  : 1200     // wait (ms) before the sentence plays after a correct answer
+};
+function sentenceAudioPath(cls, i){
+  var n = i + 1;
+  return SENTENCE_AUDIO.folder + cls + '-' + (n < 10 ? '0' + n : n) + SENTENCE_AUDIO.extension;
+}
+var voiceOn = true, voiceAudio = null, pendingVoice = false, voiceTimer = null, dragLoopAudio = null, starTimer = null;
+function stopSentenceAudio(){
+  if(voiceTimer){ clearTimeout(voiceTimer); voiceTimer = null; }
+  if(voiceAudio){ try{ voiceAudio.pause(); voiceAudio.currentTime = 0; }catch(e){} voiceAudio = null; }
+}
+function playSentenceAudio(){
+  stopSentenceAudio();
+  if(!SENTENCE_AUDIO.enabled || !voiceOn) return;
+  var a = new Audio(sentenceAudioPath(currentCls, currentLevel));
+  a.volume = VOLUME.voice;
+  voiceAudio = a;
+  var p = a.play();
+  if(p && p.catch) p.catch(function(err){
+    /* Browser blocked autoplay (no tap yet): play on the first tap instead. Missing file: ignore. */
+    if(err && err.name === 'NotAllowedError') pendingVoice = true;
+  });
+}
+window.addEventListener('pointerdown', function(){
+  if(pendingVoice){ pendingVoice = false; playSentenceAudio(); }
+}, {passive:true});
+function startDragLoop(){
+  if(!sfxOn || !AUDIO_FILES.dragLoop) return;
+  if(!dragLoopAudio) dragLoopAudio = makeAudio(AUDIO_FILES.dragLoop, true, VOLUME.sfx);
+  if(dragLoopAudio){ try{ dragLoopAudio.currentTime = 0; var p = dragLoopAudio.play(); if(p && p.catch) p.catch(function(){}); }catch(e){} }
+}
+function stopDragLoop(){
+  if(dragLoopAudio){ try{ dragLoopAudio.pause(); dragLoopAudio.currentTime = 0; }catch(e){} }
+}
 
 var musicOn = true, sfxOn = true, bgStarted = false, bgAudio = null, currentActionAudio = null;
 var sfxCache = {};
@@ -402,9 +556,19 @@ sfxBtn.addEventListener('click', function(){
   sfxBtn.classList.toggle('off', !sfxOn);
   if(!sfxOn) stopActionSound();
 });
+document.getElementById('voiceBtn').addEventListener('click', function(){
+  voiceOn = !voiceOn;
+  var vb = document.getElementById('voiceBtn');
+  vb.textContent = voiceOn ? '🗣️ Voice: On' : '🗣️ Voice: Off';
+  vb.classList.toggle('off', !voiceOn);
+  if(!voiceOn) stopSentenceAudio();
+});
+document.getElementById('hearBtn').addEventListener('click', function(){
+  var was = voiceOn; voiceOn = true; playSentenceAudio(); voiceOn = was;
+});
 /* ================= END AUDIO SETUP ================= */
 
-var levels, currentLevel, attempts, totalStars, locked, currentCls='PP';
+var levels, currentLevel, attempts, totalStars, locked, hintUsed=false, currentCls='PP';
 totalStars=0; locked=false;
 
 var slotsEl=document.getElementById('slots'), bankEl=document.getElementById('bank'),
@@ -442,7 +606,13 @@ function buildProgress(){
 }
 function loadLevel(i){
   stopActionSound();
+  stopSentenceAudio();
+  if(starTimer){ clearTimeout(starTimer); starTimer=null; }
   currentLevel=i; attempts=0; locked=false;
+  /* the hint can be used only once per sentence: give a fresh one for the new sentence */
+  hintUsed=false;
+  hintBtn.disabled=false;
+  hintBtn.textContent='Hint (1)';
   scene.className='scene';
   successBanner.style.display='none'; completion.style.display='none';
   board.style.display='block';
@@ -463,6 +633,7 @@ function loadLevel(i){
     t.id='tile-'+i+'-'+w; bankEl.appendChild(t);
   }
   updateCheckState();
+  if(SENTENCE_AUDIO.playOnLoad) playSentenceAudio();
 }
 function findEmptySlot(){
   var slots=slotsEl.querySelectorAll('.slot');
@@ -494,6 +665,7 @@ board.addEventListener('pointermove', function(e){
   if(!moved){
     moved=true; suppressClick=true;
     playSfx('pick');
+    startDragLoop();
     dragClone=dragTile.cloneNode(true);
     dragClone.classList.add('drag-clone');
     dragClone.classList.remove('dragging');
@@ -516,6 +688,7 @@ board.addEventListener('pointermove', function(e){
 function endDrag(e){
   if(!dragTile) return;
   var tile=dragTile; dragTile=null;
+  stopDragLoop();
   if(dragClone){dragClone.remove(); dragClone=null;}
   tile.classList.remove('dragging');
   slotsEl.querySelectorAll('.slot').forEach(function(s){s.classList.remove('hover');});
@@ -562,8 +735,10 @@ checkBtn.addEventListener('click', function(){
     slotEls.forEach(function(sl){if(sl.classList.contains('wrong')){sl.classList.remove('shake'); void sl.offsetWidth; sl.classList.add('shake');}});
   }
 });
+
+/* HINT: can be used only ONCE for each sentence */
 hintBtn.addEventListener('click', function(){
-  if(locked) return;
+  if(locked || hintUsed) return;
   playSfx('hint');
   var level=levels[currentLevel];
   var slotEls=slotsEl.querySelectorAll('.slot');
@@ -575,7 +750,13 @@ hintBtn.addEventListener('click', function(){
       for(var j=0;j<allTiles.length;j++){
         if(allTiles[j].textContent.trim()===level.words[i]){target=allTiles[j]; if(allTiles[j].parentElement===bankEl) break;}
       }
-      if(target){placeTile(target, slotEls[i]); updateCheckState();}
+      if(target){
+        placeTile(target, slotEls[i]);
+        updateCheckState();
+        hintUsed=true;
+        hintBtn.disabled=true;
+        hintBtn.textContent='Hint used';
+      }
       return;
     }
   }
@@ -597,27 +778,56 @@ function success(){
   if(MOVING[act]) scene.classList.add('moving');
   if(RUNFAST[act]) scene.classList.add('runfast');
   playSfx('correct');
-  playSfx('star'+stars);
   playActionSound(act);
+  if(SENTENCE_AUDIO.playOnCorrect){
+    if(voiceTimer) clearTimeout(voiceTimer);
+    voiceTimer = setTimeout(playSentenceAudio, SENTENCE_AUDIO.correctDelay);
+  }
   starRow.innerHTML='';
   for(var i=0;i<3;i++){
     var sp=document.createElement('span'); sp.className='star'+(i<stars?'':' dim');
     sp.textContent='★'; starRow.appendChild(sp);
   }
   var wait=WAIT[act]||3200;
-  setTimeout(function(){
+  /* The star sound now plays at the SAME moment the stars appear on screen
+     (after the rabbit has finished acting), not at the start. */
+  if(starTimer) clearTimeout(starTimer);
+  starTimer = setTimeout(function(){
+    starTimer = null;
     board.style.display='none'; successBanner.style.display='block';
     nextBtn.textContent=(currentLevel+1<levels.length)?'Next Sentence':'See Results';
+    playSfx('star'+stars);
   }, wait);
 }
 nextBtn.addEventListener('click', function(){
   stopActionSound();
+  stopSentenceAudio();
   if(currentLevel+1<levels.length){ playSfx('next'); loadLevel(currentLevel+1); }
   else {finalStars.textContent=totalStars; successBanner.style.display='none'; completion.style.display='block'; playSfx('complete');}
 });
 playAgain.addEventListener('click', function(){playSfx('next'); setClass(currentCls);});
 
 setClass('PP');
+})();
+</script>
+
+<!-- ===== SPLASH SCREEN SCRIPT ===== -->
+<script>
+(function(){
+  var sp=document.getElementById('splash');
+  if(!sp) return;
+  var closed=false;
+  function closeSplash(){
+    if(closed) return; closed=true;
+    sp.classList.add('hide');
+    setTimeout(function(){ if(sp.parentNode) sp.parentNode.removeChild(sp); }, 700);
+  }
+  sp.addEventListener('pointerdown', closeSplash);
+  /* wait for fonts, but show the splash for at least 2.8 s and never longer than 3.2 s */
+  var minTime=new Promise(function(r){ setTimeout(r, 2800); });
+  var ready=(document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  Promise.all([minTime, ready]).then(closeSplash);
+  setTimeout(closeSplash, 3200);
 })();
 </script>
 </html>
